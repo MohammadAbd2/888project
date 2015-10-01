@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+    <h:head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="Refresh"  content="300; URL=#{request.contextPath}/home/login.xhtml"/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"></h:outputScript>
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css' />
+        <h:outputScript>
+            function btnChange() {
+                //$('.loadingform').css("display", "block");
+                $('.btnform').attr("disable","disable").html('<span class="ui-button-icon-left ui-icon ui-c fa fa-spin fa-circle-o-notch"></span><span class="ui-button-text ui-c" style="padding-left: 45px; margin-left: 0;">Loading...</span>');
+            PF('loginVar').disable();
+            }
+        </h:outputScript>
+    </h:head>
+    <h:body>
+        <f:facet name="last">
+            <h:outputStylesheet name="style.css" library="css" />
+        </f:facet>
+        <h:form id="loginForm" styleClass="centeredPanel">
+            <p:panel header="Login" >
+                <h:panelGrid  id="loginPanel" columns="1" cellpadding="5" >
+                    <f:facet name="header">
+                        <p:messages id="msgs" />
+                    </f:facet>
+                    <p:inputText id="username" placeholder="Username" value="#{loginBean.uname}" required="true" validatorMessage="Username must be over 2 chatarcter!" requiredMessage="Username field is required!" label="Username">
+                        <f:validateLength minimum="3"/>
+                    </p:inputText>
+                    <p:message for="username" id="msgusername" display="tooltip"/>
+                    <p:password id="password" placeholder="Password" value="#{loginBean.password}" feedback="false" required="true" validatorMessage="Password must be over 8 chatarcter!" requiredMessage="Password field is required!" label="Password">
+                        <f:validateLength minimum="8"/>
+                    </p:password>
+                    <p:message for="password" id="msgpassword" display="tooltip"/>
+                    <p:commandButton id="btnform" widgetVar="loginVar" action="#{loginBean.Logincheck}" value="Login" update="@form" ajax="true" class="btnform blue" icon="fa fa-sign-in" onclick="btnChange()"></p:commandButton>
+                </h:panelGrid>
+                <f:facet name="footer" style="background: none;">
+                    <p:link value="Forget Password?"  outcome="forgetPass.xhtml"/>
+                    <p:commandLink value="Register" onclick="PF('dlgRegister').show();" style="float: right;clear: both;margin-top: 8px;"/>
+                </f:facet>
+            </p:panel>
+        </h:form>
+        <h:form id="FormMoneyMaking">
+            <p:dialog header="Register" dynamic="true"  id="register" widgetVar="dlgRegister" modal="true"  styleClass="dialog" resizable="false"  width="466px"  closeOnEscape="true"  showEffect="clip" hideEffect="clip" closable="true" >
+                <ui:include  src="register.xhtml" />
+            </p:dialog>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

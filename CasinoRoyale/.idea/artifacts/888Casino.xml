@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="888Casino">
+    <output-path>$PROJECT_DIR$/out/artifacts/888Casino</output-path>
+    <root id="archive" name="888Casino.war">
+      <element id="artifact" artifact-name="PokerMaven:Web exploded" />
+    </root>
+  </artifact>
+</component>

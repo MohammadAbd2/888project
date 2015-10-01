@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" contentType="text/html" />
+
+<!--<script src="//code.jquery.com/jquery-1.10.2.js" type=""></script>-->
+
+<h:head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+   <!-- <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js" type=""></script>-->
+
+
+</h:head>
+
+
+<script type="text/javascript">
+    function refreshPage() {
+        $.mobile.changePage(
+                window.location.href,
+                {
+                    allowSamePageTransition : true,
+                    transition              : 'flip',
+                    showLoadMsg             : false,
+                    reloadPage              : false
+                }
+        );
+    }
+
+    function btnDisable2() {
+
+        //   var htmlString = $( '.submit' ).html();
+        $( '.submit2' ).text( "Please Wait...");
+        $( '.submit2' ).css({"color": "red"});
+        PF('sendButtonM').disable();
+        //   var button = jQuery('.submit');
+        //  button.hide();
+        //   $(".pw").css("display", "block");
+        // $( '.submit' ).prop({disabled: true});
+    }
+
+</script>
+
+<h:body class="ui-mobile-viewport ui-overlay-a">
+
+
+
+    <pm:page id="first" swatch="b" >
+
+
+        <pm:content >
+
+
+                    <h:form id="loginForm" styleClass="loginid">
+                <!--  <p:growl id="msg" showDetail="true" life="3000"  />-->
+                <p:panel header="Login"   style="max-width: 400px; margin-left: auto;margin-right: auto">
+
+                    <h:panelGrid id="loginPanel" columns="1" cellpadding="5">
+                        <f:facet name="header">
+                            <p:messages id="msgs" />
+                        </f:facet>
+
+                        <p:inputText id="username" placeholder="Username" size="100" value="#{loginBean.uname}" required="true"
+                                     validatorMessage="Username must be over 2 chatarcter!"      requiredMessage="Username field is required!" label="Username">
+                            <f:validateLength minimum="3"/>
+
+                        </p:inputText>
+                        <p:message for="username" id="msgusername" display="tooltip"/>
+
+                        <p:password id="password" placeholder="Password" size="100"  value="#{loginBean.password}" feedback="false" required="true"
+                                    validatorMessage="Password must be over 5 chatarcter!"          requiredMessage="Password field is required!" label="Password">
+                            <f:validateLength minimum="6"/>
+
+                        </p:password>
+                        <p:message for="password" id="msgpassword" display="tooltip"/>
+
+                        <p:commandButton id="btnlogin" action="#{loginBean.Logincheck}"  value="Login" update="loginForm"
+                                        ajax="true" ></p:commandButton>
+
+                    </h:panelGrid>
+
+
+                        <p:link value="Forget Password?"  outcome="pm:forget?transition=flip"/>
+
+                </p:panel>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page >
+
+    <pm:page id="forget" swatch="b" >
+
+
+        <pm:content >
+            <h:form id="fPassForm">
+                <!--  <p:growl id="msg" showDetail="true" life="3000"  />-->
+                <p:panel header="Forget Password"    style="max-width: 400px; margin-left: auto;margin-right: auto">
+
+                    <h:panelGrid id="FpPanel" columns="1" cellpadding="5">
+                        <f:facet name="header">
+                            <p:messages id="msgs2"  />
+                        </f:facet>
+
+
+                        <p:inputText id="username2" placeholder="Username"  size="100" value="#{passwordRecovery.username}" required="true"
+                                     validatorMessage="Username must be over 2 chatarcter!"     requiredMessage="Username field is required!" >
+                            <f:validateLength minimum="3" />
+                         <!--   <p:ajax update="msgusername2" event="keyup"/>-->
+                        </p:inputText>
+                      <!--  <p:message for="username2" id="msgusername2" display="tooltip"/>-->
+
+
+                        <p:inputText id="email" placeholder="Email"  size="100" value="#{passwordRecovery.email}" feedback="false" required="true"
+                                     requiredMessage="Email field is required!" validatorMessage="Invalid Email Format!" >
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                          <!--  <p:ajax update="msgemail" event="keyup"/>-->
+                        </p:inputText>
+                       <!-- <p:message for="email" id="msgemail" display="tooltip"/>-->
+
+                        <p:commandButton id="btnFpass" widgetVar="sendButtonM"  styleClass="submit2" action="#{passwordRecovery.changePass}" value="Send Password" update="fPassForm"
+                                         onclick="btnDisable2()"    ajax="true" ></p:commandButton>
+
+                    </h:panelGrid>
+
+
+                        <p:link value="Back to Login"  outcome="pm:first?transition=flip"/>
+
+                </p:panel>
+
+            </h:form>
+        </pm:content>
+    </pm:page>
+
+    <pm:page id="second" swatch="b" >
+
+
+        <pm:content >
+            <h:form id="loginFormC" styleClass="loginid">
+                <!--  <p:growl id="msg" showDetail="true" life="3000"  />-->
+                <p:panel header="Login"  >
+
+                    <h:panelGrid id="loginPanelC" columns="1" cellpadding="5">
+                        <f:facet name="header">
+                            <p:messages id="msgsC" />
+                        </f:facet>
+
+                        <p:inputText id="usernameC" placeholder="Username" size="100"  value="#{loginBean.uname}" required="true"
+                                     validatorMessage="Username must be over 2 chatarcter!"      requiredMessage="Username field is required!" >
+                            <f:validateLength minimum="3"/>
+
+                        </p:inputText>
+                        <p:message for="usernameC" id="msgusernameC" display="tooltip"/>
+
+                        <p:password id="passwordC" placeholder="Password" size="100"  value="#{loginBean.password}" feedback="false" required="true"
+                                    validatorMessage="Password must be over 5 chatarcter!"          requiredMessage="Password field is required!">
+                            <f:validateLength minimum="6"/>
+
+                        </p:password>
+                        <p:message for="passwordC" id="msgpasswordC" display="tooltip"/>
+                        <p:panel style="border: none"  >
+                            <p:captcha id="captcha" label="Captcha" theme="blackglass"  />
+                        </p:panel>
+
+                        <p:commandButton id="btnloginC" action="#{loginBean.LogincheckCaptcha}"  value="Login" update="loginFormC"
+                                         ajax="false"  ></p:commandButton>
+
+                    </h:panelGrid>
+                    <f:facet name="footer">
+
+                        <p:link value="Forget Password?"  outcome="pm:forget?transition=flip"/>
+
+                    </f:facet>
+                </p:panel>
+
+            </h:form>
+
+        </pm:content>
+    </pm:page>
+
+
+</h:body>
+
+</html>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view >
+
+    <h:outputScript>
+        function btnChange() {
+        $('.btnform').html('<span class="ui-button-text ui-c"><i class="fa fa-spin fa-circle-o-notch"></i>Please Wait...</span>');
+        PF('resetPassVar').disable();
+        }
+    </h:outputScript>
+        <p:tabView dynamic="true" effect="slide" id="tabInfo"  >
+
+            <p:tab title="Account information">
+                <p:panelGrid columns="2" style="width: 100%"   >
+<p:column style="width:50%">
+    <p:outputLabel for="usertext"  value="UserName" />
+</p:column>
+                    <p:column style="width:50%">
+                        <h:outputText id="usertext"  value="#{accountInformationBean.username}" />
+                    </p:column>
+                    <p:column style="width:50%">
+    <p:outputLabel for="nametext" value="RealName" />
+                    </p:column>
+                    <p:column style="width:50%">
+                        <h:outputText id="nametext"  value="#{accountInformationBean.realName}" />
+                </p:column>
+                    <p:column style="width:50%" rendered="#{accountInformationBean.chipOnTable>0}">
+                        <p:outputLabel for="chiptabletext" value="Chips On Table" />
+                    </p:column>
+                    <p:column style="width:50%" rendered="#{accountInformationBean.chipOnTable>0}">
+                        <h:outputText id="chiptabletext" value="#{accountInformationBean.chipOnTable} K"/>
+                    </p:column>
+                    <p:column style="width:50%" rendered="#{accountInformationBean.slotBank>0}">
+                        <p:outputLabel for="chipSlottext" value="Chips On SlotMachine" />
+                    </p:column>
+                    <p:column style="width:50%" rendered="#{accountInformationBean.slotBank>0}">
+                        <h:outputText id="chipSlottext" value="#{accountInformationBean.slotBank} K" />
+                    </p:column>
+                    <p:column style="width:50%" rendered="#{accountInformationBean.slotBank>0 or accountInformationBean.chipOnTable>0}">
+                        <p:outputLabel for="chipBanktext" value="Chips in Bank" />
+                    </p:column>
+                    <p:column style="width:50%" rendered="#{accountInformationBean.slotBank>0 or accountInformationBean.chipOnTable>0}">
+                        <h:outputText id="chipBanktext" value="#{accountInformationBean.bankChip} K"/>
+                    </p:column>
+                    <p:column style="width:50%">
+    <p:outputLabel for="tchiptext" value="Total Chips" />
+                    </p:column>
+                    <p:column style="width:50%">
+                        <h:outputText id="tchiptext" value="#{accountInformationBean.totalChip} K" />
+                    </p:column>
+
+                    <p:column style="width:50%">
+                        <p:outputLabel for="emailtext" value="Email" rendered="#{loginBean.root==true}"/>
+                    </p:column>
+                    <p:column style="width:50%">
+                        <h:outputText id="emailtext" value="#{accountInformationBean.email}" rendered="#{loginBean.root==true}"/>
+                    </p:column>
+                    <p:column style="width:50%">
+                        <p:outputLabel for="flogintext" value="First Login" />
+                    </p:column>
+                    <p:column style="width:50%">
+                        <h:outputText id="flogintext" value="#{accountInformationBean.firstLogin}" />
+                    </p:column>
+                    <p:column style="width:50%">
+                        <p:outputLabel for="Llogintext" value="Last Login" />
+                    </p:column>
+                    <p:column style="width:50%">
+                        <h:outputText id="Llogintext" value="#{accountInformationBean.lastLogin}" />
+                    </p:column>
+                    <p:column style="width:50%">
+    <p:outputLabel for="logintext" value="Logins" />
+                    </p:column>
+                    <p:column style="width:50%">
+                    <h:outputText id="logintext" value="#{accountInformationBean.logins}" />
+                    </p:column>
+                </p:panelGrid>
+                <p:panel >
+                    <p:commandButton value="Terminate" action="#{accountInformationBean.terminate}" update="msgInfo" icon="ui-icon-extlink"></p:commandButton>
+                    <p:commandButton id="btnBlackList" styleClass="btnBlock" value="#{accountInformationBean.btnBlaclList}" actionListener="#{accountInformationBean.blackList}" update="btnBlackList,msgInfo" icon="#{accountInformationBean.btnBlockIcon}" style="#{accountInformationBean.btnBlockStyle}"  ></p:commandButton>
+                    <p:commandButton id="btnResetPass" widgetVar="resetPassVar" value="Reset Password" action="#{accountInformationBean.resetPassword}" update="msgInfo,btnResetPass" ajax="true" class="btnform blue" onclick="btnChange()" ></p:commandButton>
+                    <p:messages id="msgInfo"  showDetail="true" globalOnly="true"/>
+                </p:panel>
+            </p:tab>
+            <p:tab id="tview2" title="Change Info">
+                <p:panelGrid   cellpadding="10" columns="2" columnClasses="label, value">
+
+                    <p:outputLabel for="rname" value="RealName" />
+                    <p:inputText id="rname" value="#{accountInformationBean.realName}" size="30" />
+
+                    <p:outputLabel for="email" value="Email" rendered="#{loginBean.root==true}"/>
+                    <p:inputText id="email" value="#{accountInformationBean.email}" size="30" rendered="#{loginBean.root==true}"/>
+
+                    <p:outputLabel for="location" value="Location" />
+                    <p:inputText id="location" value="#{accountInformationBean.location}" size="30" />
+
+</p:panelGrid>
+                <p:panel style="border: hidden;">
+                    <p:commandButton id="btnSave" value="Save" actionListener="#{accountInformationBean.changeUserInfo}" update="msgInfo2,tabInfo" icon="ui-icon-disk"  ></p:commandButton>
+
+                    <p:messages id="msgInfo2"  showDetail="true" globalOnly="true"
+                            />
+                </p:panel>
+            </p:tab>
+
+            <p:tab id="tabDownline" title="Downline">
+                <p:panelGrid columns="1">
+
+                    <p:dataTable id="tableDownline" var="dl" value="#{userUpline.uUpline}" scrollable="true" scrollHeight="200"  styleClass="myTable">
+                        <f:facet name="header">
+                            <h:outputText value="Player" sortBy="#{dl.downline}"/>
+                        </f:facet>
+                        <p:column style="text-align: center;border: none"  rendered="#{dl.downlineCheck}" >
+
+                            <h:outputText value="#{dl.downline}" style="color: gold" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+            </p:tab>
+            <p:tab id="tabUpline" title="Upline">
+                <p:panelGrid columns="1">
+
+                    <p:dataTable id="tableUpline" var="dl2" value="#{userUpline.uUpline}" scrollable="true" scrollHeight="200"  styleClass="myTable">
+                        <f:facet name="header">
+                            <h:outputText value="Player" />
+                        </f:facet>
+                        <p:column style="text-align: center;border: none" rendered="#{dl2.uplineCheck}"  >
+
+                            <h:outputText value="#{dl2.upline}" style="color: gold" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+            </p:tab>
+
+            <p:tab id="tabPokerReport" title="Poker Report">
+                <p:panel id="panelPokerReport">
+                <p:panelGrid columns="3"  id="calendarPanelPokerReport"  >
+                    <p:columnGroup>
+                        <p:outputLabel for="startDatePokerReport" value="StartDate:" style="font-size: small"/>
+                        <p:spacer width="5px"/>
+                        <p:calendar id="startDatePokerReport" value="#{pokerReport.startCalaedar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true"  maxdate="#{pokerReport.today}" >
+                        </p:calendar>
+                    </p:columnGroup>
+
+                    <p:columnGroup>
+                        <p:outputLabel for="endDatePokerReport" value="EndDate:" style="font-size: small"/>
+                        <p:spacer width="5px"/>
+                        <p:calendar id="endDatePokerReport" value="#{pokerReport.endCalendar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true"  maxdate="#{pokerReport.today}" >
+                        </p:calendar>
+                    </p:columnGroup>
+
+                    <p:columnGroup>
+                        <p:commandButton  id="pokerReportSubmitDate" value="Submit" action="#{pokerReport.initPokerReport}"  update=":FormdialogInfo:tabInfo:tablePokerReport" oncomplete="PF('tblPokerReport').clearFilters();"  icon="ui-icon-check" />
+                    </p:columnGroup>
+                </p:panelGrid>
+
+                <p:panelGrid columns="3">
+
+                    <p:dataTable id="tablePokerReport" var="dl3" value="#{pokerReport.pokerReports}" widgetVar="tblPokerReport"  emptyMessage="There is no Poker Report."  style="font-size:small"  paginatorPosition="bottom" styleClass="myTable"
+                                 paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+                        <p:column style="text-align: center;width: 10%" >
+                            <f:facet name="header">
+                                <h:outputText value="#" />
+                            </f:facet>
+                            <h:outputText value="#{dl3.number}" style="color: gold"/>
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 25%" filterBy="#{dl3.dateTime}" sortBy="#{dl3.dateTime}" filterStyle="width: 50%" filterMatchMode="contains" >
+                            <f:facet name="header">
+                                <h:outputText value="DateTime" />
+                            </f:facet>
+                            <h:outputText value="#{dl3.dateTime}" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 65%" filterBy="#{dl3.pokerDescription}" sortBy="#{dl3.pokerDescription}" filterStyle="width: 50%" filterMatchMode="contains" >
+                            <f:facet name="header">
+                                <h:outputText value="Decription" />
+                            </f:facet>
+                            <h:outputText value="#{dl3.pokerDescription}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+                </p:panel>
+                <p:blockUI block=":FormdialogInfo:tabInfo:panelPokerReport" trigger=":FormdialogInfo:tabInfo:pokerReportSubmitDate">
+                    <h:graphicImage value="/images/Loading1.gif" />
+                </p:blockUI>
+            </p:tab>
+
+            <p:tab id="tabSlotMachineReport" title="SlotMachine Report">
+                <p:panel id="panelSlotMachineReport">
+                    <p:panelGrid columns="3"  id="calendarPanelSlotMachineReport"  >
+                        <p:columnGroup>
+                            <p:outputLabel for="startDateSlotMachineReport" value="StartDate:" style="font-size: small"/>
+                            <p:spacer width="5px"/>
+                            <p:calendar id="startDateSlotMachineReport" value="#{slotMachineReport.startCalaedar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true"  maxdate="#{pokerReport.today}" >
+                            </p:calendar>
+                        </p:columnGroup>
+
+                        <p:columnGroup>
+                            <p:outputLabel for="endDateSlotMachineReport" value="EndDate:" style="font-size: small"/>
+                            <p:spacer width="5px"/>
+                            <p:calendar id="endDateSlotMachineReport" value="#{slotMachineReport.endCalendar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true"  maxdate="#{pokerReport.today}" >
+                            </p:calendar>
+                        </p:columnGroup>
+
+                        <p:columnGroup>
+                            <p:commandButton  id="slotMachineReportSubmitDate" value="Submit" action="#{slotMachineReport.initSlotMachineReport}"  update=":FormdialogInfo:tabInfo:tableSlotMachineReport" oncomplete="PF('tblSlotMachine').clearFilters();"  icon="ui-icon-check" />
+                        </p:columnGroup>
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="6" >
+
+                        <p:dataTable id="tableSlotMachineReport" var="dl4" value="#{slotMachineReport.slotMachineReports}" widgetVar="tblSlotMachine"  emptyMessage="There is no SlotMachine Report."  style="font-size:small"  paginatorPosition="bottom" styleClass="myTable"
+                                     paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                            <f:facet name="header"  >
+                                <p:outputPanel >
+                                    <div align="left">
+                                        <p:inputText id="globalFilter" onkeyup="PF('tblSlotMachine').filter()" style="width:150px" placeholder="Search" />
+                                    </div >
+                                </p:outputPanel>
+                            </f:facet>
+                            <p:column style="text-align: center;width: 14%" headerText="StartBank(K)" filterBy="#{dl4.startBank}" filterStyle="display: none" sortBy="#{dl4.startBank}" >
+                                <h:outputText value="#{dl4.startBank}" style="color: darkgrey" />
+
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 14%" headerText="EndBank(K)" filterBy="#{dl4.endBank}" filterStyle="display: none" sortBy="#{dl4.endBank}" >
+                                <h:outputText value="#{dl4.endBank}" style="color: darkgrey" />
+
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 14%" headerText="Win(K)" filterBy="#{dl4.amountWin}" filterStyle="display: none" sortBy="#{dl4.amountWin}" >
+                                <h:outputText value="#{dl4.amountWin}" style="color: darkgrey" />
+
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 14%" headerText="Total(K)" filterBy="#{dl4.amountTotal}" filterStyle="display: none" sortBy="#{dl4.amountTotal}" >
+                                <h:outputText value="#{dl4.amountTotal}" style="color: darkgrey" />
+
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 30%" headerText="Descriptions" filterBy="#{dl4.descriptions}" filterStyle="display: none" sortBy="#{dl4.descriptions}" >
+                                <h:outputText value="#{dl4.descriptions}" style="color: darkgrey" />
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 30%" headerText="Date" filterBy="#{dl4.date}" filterStyle="display: none" sortBy="#{dl4.date}" >
+                                <h:outputText value="#{dl4.date}" />
+                            </p:column>
+
+
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column  footerText=""/>
+                                    <p:column footerText=""/>
+                                    <p:column footerText="" />
+                                    <p:column footerText="#{slotMachineReport.sumTotal} K" style="color: gold"/>
+                                    <p:column footerText="" />
+                                    <p:column footerText="Total" />
+                                </p:row>
+                            </p:columnGroup>
+
+                        </p:dataTable>
+
+                    </p:panelGrid>
+                </p:panel>
+                <p:blockUI block=":FormdialogInfo:tabInfo:panelSlotMachineReport" trigger=":FormdialogInfo:tabInfo:slotMachineReportSubmitDate">
+                    <h:graphicImage value="/images/Loading1.gif" />
+                </p:blockUI>
+            </p:tab>
+
+<p:tab title="Messages">
+    <div style="height:100%;width: 100%">
+        <p:panel header="Online Message" >
+        <p:inputTextarea id="inputonlineMessages" style="width:99%;height: 60%; background-color: floralwhite"  value="#{messages.userOnlineMessage}" placeholder="Write messages to online player" autoResize="true"/>
+        <p:commandButton id="btnonlineMessages" style="width:30%" value="Send Online Message"  actionListener="#{messages.sendMessageOnlineUser}"  >
+        </p:commandButton>
+        </p:panel>
+
+        <p:panel header="Offline Message" >
+        <p:inputText value="#{messages.subject}" placeholder="Subject" style="width:99%"/>
+        <p:inputTextarea id="inputOfflineMessages" rows="5"  widgetVar="msgEditor" style="width:99%;height:150px" value="#{messages.userOfflineMessage}"/>
+        <p:commandButton id="btnOfflineMessages" style="width:30%" value="Send Offline Message"  actionListener="#{messages.saveOfflineMsg}"  >
+        </p:commandButton>
+        </p:panel>
+        <div style="clear:both" />
+</div>
+</p:tab>
+
+        </p:tabView>
+
+</f:view>
+</html>

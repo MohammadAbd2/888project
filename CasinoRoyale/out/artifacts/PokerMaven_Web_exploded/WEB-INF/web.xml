@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+    <display-name>CasinoRoyale</display-name>
+
+    <!-- Change to "Production" when you are ready to deploy -->
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/WEB-INF/config.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>domain</param-name>
+        <param-value>http://www.888pkr.club</param-value>
+    </context-param>
+    <context-param>
+        <param-name>winApp</param-name>
+        <param-value>/downloads/888Casino-Setup.exe</param-value>
+    </context-param>
+    <context-param>
+        <param-name>macApp</param-name>
+        <param-value>/downloads/888Casino.app.zip</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>ipPort</param-name>
+        <param-value>http://188.138.57.28:4210</param-value>
+    </context-param>
+    <context-param>
+        <param-name>handhistory</param-name>
+        <param-value>C:/Users/Administrator/Documents/Information/HandHistory/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>eventLogs</param-name>
+        <param-value>C:/Users/Administrator/Documents/Information/Logs/</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>avatar</param-name>
+        <param-value>C:/Users/Administrator/Documents/888Poker/images/avatars/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>payout</param-name>
+        <param-value>0.30</param-value>
+    </context-param>
+    <context-param>
+        <param-name>adminNames</param-name>
+        <param-value>777,DjMamsi,Saten,MEHRDAD</param-value>
+    </context-param>
+    <context-param>
+        <param-name>root1</param-name>
+        <param-value>777</param-value>
+    </context-param>
+    <context-param>
+        <param-name>root2</param-name>
+        <param-value>DjMamsi</param-value>
+    </context-param>
+    <context-param>
+        <param-name>getCustomFields</param-name>
+        <param-value>no</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mavenPassword</param-name>
+        <param-value>/myapi?Password=888Casino_Saman_?!</param-value>
+    </context-param>
+   <context-param>
+        <param-name>gmailUser</param-name>
+        <param-value>888pkr.mail@gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>gmailPass</param-name>
+        <param-value>42101365aS</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mailServer</param-name>
+        <param-value>Server</param-value>
+    </context-param>
+     <context-param>
+        <param-name>mailHost</param-name>
+        <param-value>888casino.co.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mailFrom</param-name>
+        <param-value>888Casino@888casino.co.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>JDBC-DRIVER</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>DB-SERVER</param-name>
+        <param-value>jdbc:mysql://localhost:3377/888poker</param-value>
+    </context-param>
+    <context-param>
+        <param-name>DB-USER</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>DB-PASSWORD</param-name>
+        <param-value>42101365@dmin</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>dot-luv</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <!--<param-value>6LcoWQoTAAAAAAc4ySDn1mEux7vXWfJdebBtcvJ8</param-value>--> <!--usa-->
+          <!-- <param-value>6Lf1zgMTAAAAABxSBXHGlIYgoualMC1KtuWXcdb0</param-value>-->
+        <!-- <param-value>6LebPgYTAAAAAK5YSF6_O_bzlxNUiO6q3njeuoz4</param-value>--> <!--germany -->
+        <param-value>6LdMjAsTAAAAAESAZoeUDQxaaeURlidX9Dhn9kKD</param-value> <!--germany2 -->
+    </context-param>
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <!--<param-value>6LcoWQoTAAAAAHPX96bLelxHYi4_ciDu-6FjFa3T</param-value>--> <!--usa-->
+         <!-- <param-value>6Lf1zgMTAAAAAG2jiSXlTpZy_yTu0SfuMS4J3T9n</param-value>-->
+         <!-- <param-value>6LebPgYTAAAAAOiXLw6KeP4x4vAwIDqiqsyupGRa</param-value>--> <!--germany -->
+         <param-value>6LdMjAsTAAAAAPSjBKZepkWNco0gne6GavaJqoNl</param-value> <!--germany2 -->
+    </context-param>
+    <!-- Filtering -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.saman.jsf.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/secured/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>MobileFilter</filter-name>
+        <filter-class>com.saman.jsf.MobileFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MobileFilter</filter-name>
+        <url-pattern>/home/login.xhtml</url-pattern>
+        <url-pattern>/home/loginCaptcha.xhtml</url-pattern>
+        <url-pattern>/home/forgetPass.xhtml</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>BrowserFilter</filter-name>
+        <filter-class>com.saman.jsf.BrowserFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>BrowserFilter</filter-name>
+        <url-pattern>/home/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ServerFilter</filter-name>
+        <filter-class>com.saman.jsf.ServerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ServerFilter</filter-name>
+        <url-pattern>/home/*</url-pattern>
+        <url-pattern>/secured/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>CaptchaFilter</filter-name>
+        <filter-class>com.saman.jsf.CaptchaFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CaptchaFilter</filter-name>
+        <url-pattern>/home/login.xhtml</url-pattern>
+        <url-pattern>/home/loginMobile.xhtml</url-pattern>
+    </filter-mapping>
+
+
+    <!-- Welcome page -->
+    <welcome-file-list>
+        <welcome-file>home/login.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Map these files with JSF -->
+
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>
+            com.saman.jsf.com.saman.jsf.report.GenerateIncome
+        </listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            com.saman.jsf.com.saman.jsf.activetable.GenerateActiveTable
+        </listener-class>
+    </listener>
+</web-app>

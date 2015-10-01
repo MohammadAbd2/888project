@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+    <h:outputStylesheet name="style.css" library="css"/>
+    <h:outputScript>
+        function btnDisable(id ,btn) {
+            var widget = id;
+            var btnClass = '.'+btn;
+            $( btnClass).text( "Please Wait...");
+            $( btnClass ).css({"color": "red"});
+            PF(widget).disable();
+        }
+    </h:outputScript>
+    <h:body>
+
+        <p:tabView dynamic="false"  effect="fade" effectDuration="slow"  id="tabCashier" activeIndex="0" widgetVar="ctrTabView">
+            <p:ajax event="tabChange" listener="#{requestList.init}" update="requestDL" oncomplete="PF('request').clearFilters()" />
+
+            <p:tab title="Deposit">
+
+                <p:panelGrid id="dpForm" columns="2" cellpadding="10" columnClasses="label, value">
+
+                    <p:outputLabel for="amountdp" value="Amount(k)" />
+                    <p:inputMask mask="9?999" maxlength="4" id="amountdp" value="#{cashier.amountDP}" />
+
+                    <p:outputLabel for="cardN" value="Card Number(16 digit)" />
+                    <p:inputMask mask="9999 9999 9999 9999" maxlength="16"  id="cardN" value="#{cashier.cardNumber}" />
+
+                </p:panelGrid>
+                <p:panel >
+
+                    <p:commandButton id="dpbtn" value="Submit Deposit" action="#{cashier.depositChip}" styleClass="btnDeposit" widgetVar="submitDeposit" onclick="btnDisable('submitDeposit','btnDeposit');" update="msgInfo,dpForm,requestDL,dpbtn" icon="ui-icon-extlink"></p:commandButton>
+
+                    <p:messages id="msgInfo"  showDetail="true" globalOnly="true"/>
+                </p:panel>
+                <!-- <p:defaultCommand target="dpbtn"/>-->
+            </p:tab>
+
+            <p:tab title="Request List" id="dplist">
+
+
+
+                <p:panelGrid columns="7" >
+
+                    <p:dataTable id="requestDL" var="dl"  value="#{requestList.rql}"  widgetVar="request"  emptyMessage="There is no request in 3 days ago." style="font-size:small" rowsPerPageTemplate="5,10" paginatorPosition="bottom"
+                                 paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+
+                        <f:facet name="header"  >
+                            <p:outputPanel >
+                                <div align="left">
+                                    <p:inputText id="globalFilter" onkeyup="PF('request').filter()" styleClass="searchinpt" placeholder="Search" />
+                                </div >
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column  >
+                            <h:outputText value="#{dl.id}" style="color: darkgrey" />
+                        </p:column>
+                        <p:column style="text-align: center;width: 14%" headerText="Request"  filterBy="#{dl.request}" filterStyle="display:none" sortBy="#{dl.request}">
+                            <h:outputText value="#{dl.request}" style="color: darkgrey" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 25%" headerText="Card Number" filterBy="#{dl.cardNumber}" filterStyle="display: none" sortBy="#{dl.cardNumber}">
+                            <h:outputText value="#{dl.cardNumber}" style="color: darkgrey" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 14%" headerText="Amount(K)" filterBy="#{dl.amount}" filterStyle="display: none" sortBy="#{dl.amount}">
+                            <h:outputText value="#{dl.amount}" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 14%" headerText="Transfer" filterBy="#{dl.transferTo}" filterStyle="display: none" sortBy="#{dl.transferTo}">
+                            <h:outputText value="#{dl.transferTo}" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 25%" headerText="Date" filterBy="#{dl.dateRQ}" filterStyle="display: none" sortBy="#{dl.dateRQ}">
+                            <h:outputText value="#{dl.dateRQ}" style="color: darkgrey" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 25%" headerText="Date of Submit" filterBy="#{dl.dateDone}" filterStyle="display: none" sortBy="#{dl.dateDone}">
+                            <h:outputText value="#{dl.dateDone}" style="color: darkgrey" />
+                        </p:column>
+
+                        <p:column style="text-align: center;width: 15%" headerText="Status" filterBy="#{dl.status}" filterStyle="display: none" sortBy="#{dl.status}" sortable="true">
+                            <h:outputText value="#{dl.status}" style="color: #{dl.statusColor}" />
+                            <p:spacer width="5px"/>
+                            <p:commandButton id="btnCancelCash" widgetVar="cancelbtn" rendered="#{dl.cashoutCancel==true}" icon="fa fa-close"  style="position: absolute; height: 20px; background: rgba(255,0,0,.4);" actionListener="#{userDAO.cancelCashoutUser(dl)}" action="#{requestList.init}" update="requestDL" oncomplete="PF('request').clearFilters()"  > <!--oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 3000),PF('request').filter();"-->
+                                <!-- <p:ajax event="click" oncomplete="doAction();"/>-->
+                                <!--    <f:ajax   listener="{requestList.init}" update="requestDL"/>-->
+                            </p:commandButton>
+
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+
+
+
+            </p:tab>
+
+            <p:tab id="tview2" title="Cashout" >
+
+                <p:panelGrid id="cashForm" columns="2" cellpadding="10" columnClasses="label, value">
+
+                    <p:outputLabel for="amountcash" value="Amount(k)" />
+                    <p:inputMask mask="9?9999" maxlength="5" id="amountcash" value="#{cashier.amountcash}" />
+
+                    <p:outputLabel for="cardN2" value="Card Number(16 digit)" />
+                    <p:inputMask mask="9999 9999 9999 9999" maxlength="16"  id="cardN2" value="#{cashier.cardNumberCash}" />
+
+                    <p:outputLabel for="holderName" value="Card Holder Name:" />
+                    <h:outputText id="holderName" value="#{loginBean.realname}"/>
+
+                </p:panelGrid>
+                <p:panel >
+
+                    <p:commandButton id="cashbtn" value="Submit Cashout" action="#{cashier.cashOutChip}" styleClass="btnCashout" widgetVar="submitCashout" onclick="btnDisable('submitCashout','btnCashout');" update="msgInfo2,cashForm,requestDL,cashbtn" icon="ui-icon-extlink"></p:commandButton>
+
+                    <p:messages id="msgInfo2"  showDetail="true" globalOnly="true"/>
+                </p:panel>
+                <!-- <p:defaultCommand target="cashbtn"/>-->
+            </p:tab>
+
+            <p:tab id="tview3" title="Transfer">
+
+                <p:panelGrid id="pgTransfer"  cellpadding="10" columns="2" columnClasses="label, value">
+
+                    <p:outputLabel for="amount" value="Amount(k)" />
+                    <p:inputMask mask="9?9999" maxlength="5" id="amount" value="#{cashier.amount}" />
+
+                    <p:outputLabel for="tUser" value="Player" />
+                    <p:autoComplete id="tUser" value="#{cashier.username}" completeMethod="#{jqueryAutoComplete.completeItem}" forceSelection="true" autoHighlight="true" effect="fade" minQueryLength="2" maxResults="10"/>
+
+                </p:panelGrid>
+                <p:panel style="border: hidden;">
+                    <p:commandButton id="btnTransfer" value="Transfer" actionListener="#{cashier.transferChip}" styleClass="btnTransfer" widgetVar="submitTransfer" onclick="btnDisable('submitTransfer','btnTransfer');"  update="tabCashier:msgTransfer,btnTransfer" icon="ui-icon-disk"  ></p:commandButton>
+
+                    <p:messages id="msgTransfer"  showDetail="true" globalOnly="true"/>
+                </p:panel>
+                <!-- <p:defaultCommand  target="btnTransfer"/>-->
+
+            </p:tab>
+
+            <p:tab id="tabPokerReport" title="Poker Report">
+                <p:panel id="panelPokerReport" styleClass="pokerreportarea">
+
+                    <p:panelGrid columns="1"  id="calendarPanelPokerReport" styleClass="searcharea">
+                        <p:columnGroup>
+                            <p:outputLabel for="startDatePokerReport" value="StartDate:" style="font-size: small"/>
+                            <p:spacer width="5px"/>
+                            <p:calendar id="startDatePokerReport" value="#{pokerReport.startCalaedar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true" mindate="#{pokerReport.sevenDaysAgo}" maxdate="#{pokerReport.today}"  styleClass="searchinpt">
+                            </p:calendar>
+                            <p:spacer width="10px"/>
+                            <p:outputLabel for="endDatePokerReport" value="EndDate:" style="font-size: small"/>
+                            <p:spacer width="5px"/>
+                            <p:calendar id="endDatePokerReport" value="#{pokerReport.endCalendar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true" mindate="#{pokerReport.sevenDaysAgo}" maxdate="#{pokerReport.today}"  styleClass="searchinpt">
+                            </p:calendar>
+                            <p:spacer width="15px"/>
+                            <p:commandButton  id="pokerReportSubmitDate" value="Submit" action="#{pokerReport.initPokerReportUser}"  update=":FormCashier:tabCashier:tablePokerReport" oncomplete="PF('tblPokerReportUser').clearFilters();"  icon="ui-icon-check" />
+                        </p:columnGroup>
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="3">
+
+                        <p:dataTable id="tablePokerReport" var="dl3" value="#{pokerReport.pokerReports}" widgetVar="tblPokerReportUser" emptyMessage="There is no Poker Report."  style="font-size:small;"  paginatorPosition="bottom" styleClass="myTable"
+                                     paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+                            <p:column style="text-align: center;width: 10%" >
+                                <f:facet name="header">
+                                    <h:outputText value="#" />
+                                </f:facet>
+                                <h:outputText value="#{dl3.number}" style="color: gold"/>
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 25%" filterBy="#{dl3.dateTime}" sortBy="#{dl3.dateTime}" filterStyle="width: 50%" filterStyleClass="filterinpt" filterMatchMode="contains" >
+                                <f:facet name="header">
+                                    <h:outputText value="DateTime" />
+                                </f:facet>
+                                <h:outputText value="#{dl3.dateTime}" />
+                            </p:column>
+
+                            <p:column style="text-align: center;width: 65%" filterBy="#{dl3.pokerDescription}" sortBy="#{dl3.pokerDescription}" filterStyle="width: 50%" filterStyleClass="filterinpt" filterMatchMode="contains" >
+                                <f:facet name="header">
+                                    <h:outputText value="Decription" />
+                                </f:facet>
+                                <h:outputText value="#{dl3.pokerDescription}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </p:panelGrid>
+                </p:panel>
+                <p:blockUI block=":FormCashier:tabCashier:panelPokerReport" trigger=":FormCashier:tabCashier:pokerReportSubmitDate">
+                    <h:graphicImage value="/images/Loading1.gif" />
+                </p:blockUI>
+            </p:tab>
+
+            <p:tab id="tabSlotMachineReport" title="SlotMachine Report">
+          <ui:include src="slotReportUser.xhtml"/>
+            </p:tab>
+
+        </p:tabView>
+    </h:body>
+</f:view>
+</html>

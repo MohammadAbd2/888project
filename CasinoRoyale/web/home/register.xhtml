@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <f:facet name="last">
+        <h:outputStylesheet name="style.css" library="css" />
+    </f:facet>
+    <h:outputScript>
+        function btnDisable(id) {
+            var widget = id;
+            $('.loadingRform').css("display", "block");
+            $('.btnRform').addClass("disabled");
+            PF(widget).disable();
+        }
+    </h:outputScript>
+    <p:panelGrid id="grid" columns="3" cellpadding="5" columnClasses="label, value">
+        <p:outputLabel for="userinput"  value="UserName" />
+        <p:inputText id="userinput" value="#{addUser.username}" label="UserName" required="false" requiredMessage="UserName is required" validatorMessage="Username must between 3-14 character!">
+            <!-- <f:validateLength minimum="3" maximum="14"/>-->
+            <!--  <p:ajax update="msgu" event="blur"  />-->
+        </p:inputText>
+        <p:message id="msgu" for="userinput" display="icon" globalOnly="false"/>
+        <p:outputLabel for="nameinput" value="RealName" />
+        <p:inputText id="nameinput" value="#{addUser.realname}" label="RealName"  required="false"  requiredMessage="RealName is required" placeholder="Unchangable later!" >
+            <!--  <p:ajax update="msgn" event="blur"/>-->
+        </p:inputText>
+        <p:message id="msgn" for="nameinput" display="icon" globalOnly="false" />
+        <p:outputLabel for="emailinput" value="Email" />
+        <p:inputText id="emailinput" value="#{addUser.email}" label="Email"  required="false"  requiredMessage="Please Enter Your Email" validatorMessage="Invalid Email Format!">
+            <!--  <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />-->
+            <!-- <p:ajax update="msgem"  event="blur"/>-->
+        </p:inputText>
+        <p:message id="msgem" for="emailinput" display="icon" globalOnly="false"/>
+    </p:panelGrid>
+    <p:panelGrid id="grid2" columns="1" cellpadding="5">
+        <p:commandButton  id="btnSend" class="btnRform blue" widgetVar="saveButton" value="Create Account" action="#{addUser.inviteUser}" update="grid,grid2" onclick="btnDisable('saveButton')" oncomplete="setTimeout(function() { $('.btnmsg').slideUp(); }, 5000)"  ></p:commandButton>
+        <h:outputText value="Please wait..." style="display: none; color: lightgray; font-size: 11px; position: absolute" styleClass="loadingRform"/>
+        <p:messages id="msgbtn"  styleClass="btnmsg" showDetail="true" globalOnly="false" showSummary="false" />
+    </p:panelGrid>
+</f:view>
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+<h:outputStylesheet name="style.css" library="css" />
+
+<p:tabView dynamic="true" effect="blind" id="tabInfo"  >
+
+
+    <p:tab id="tview2" title="Account information">
+        <p:panelGrid id="infoPanel"  cellpadding="10" columns="2" columnClasses="label, value">
+
+            <p:outputLabel for="rname" value="RealName" />
+            <h:outputText id="rname" value="#{loginBean.realname}" style="color: gold"/>
+
+            <p:outputLabel for="email" value="Email" />
+            <p:inputText id="email" value="#{accountInformationBean.email}" size="30"/>
+
+            <p:outputLabel for="location" value="Location" />
+            <p:inputText id="location" value="#{accountInformationBean.location}" size="30" />
+
+        </p:panelGrid>
+        <p:panel style="border: hidden;">
+            <p:commandButton id="btnSave" value="Change Information" actionListener="#{accountInformationBean.userChangeInfo}" update="msgInfo2,infoPanel" icon="ui-icon-disk"  ></p:commandButton>
+
+            <p:messages id="msgInfo2"  showDetail="true" globalOnly="true"/>
+        </p:panel>
+    </p:tab>
+    <p:tab title="Change Password">
+        <p:panelGrid columns="2" cellpadding="10" columnClasses="label, value">
+
+            <p:outputLabel for="newPass" value="New Password" />
+            <p:password feedback="true" id="newPass" value="#{accountInformationBean.password}" />
+
+            <p:outputLabel for="renewPass" value="Confirm Password" />
+            <p:password feedback="false" id="renewPass" value="#{accountInformationBean.rePassword}" />
+
+        </p:panelGrid>
+        <p:panel style="border: hidden;">
+            <p:commandButton id="btnSavePass" value="Change Password" actionListener="#{accountInformationBean.changePassword}" update="msgInfo3" icon="ui-icon-disk"  ></p:commandButton>
+
+            <p:messages id="msgInfo3"  showDetail="true" globalOnly="true"/>
+        </p:panel>
+    </p:tab>
+    <p:tab title="Change Avatar" id="tabAvatars" >
+
+     <!--   <p:panelGrid columns="14" cellpadding="2" >-->
+            <ui:repeat value="#{avatarName.avatarList}" var="name" >
+            <p:commandLink actionListener="#{accountInformationBean.changeAvatar(name)}">
+         <p:graphicImage id="avatar"  value="../images/avatars/#{name.avatarName}" width="33px" height="33px">
+         </p:graphicImage>
+            </p:commandLink>
+                <p:spacer height="1px" width="1px"/>
+            </ui:repeat>
+    <!--    </p:panelGrid>-->
+
+    </p:tab>
+
+</p:tabView>
+
+
+</html>

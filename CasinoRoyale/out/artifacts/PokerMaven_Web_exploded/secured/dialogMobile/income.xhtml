@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+
+    <p:panel id="panelIncome">
+        <p:panelGrid columns="1"  id="calendarPanelIncome"  styleClass="searcharea" >
+            <p:columnGroup>
+                <p:outputLabel for="costs" value="Costs:" style="font-size: small" rendered="#{loginBean.root}"/>
+                <p:inputMask mask="9?9999" maxlength="5" id="costs" value="#{income.costs}" rendered="#{loginBean.root}"/>
+                <p:commandButton id="submitCosts" value="Submit Costs" action="#{income.setCost}" rendered="#{loginBean.root}"/>
+
+                <p:outputLabel for="startdatetimeIncome" value="StartDate:" style="font-size: small"/>
+                <p:spacer width="5px"/>
+                <p:calendar id="startdatetimeIncome" value="#{income.startCalaedar}" showOn="button" maxdate="#{pokerReport.today}" readonlyInput="true" pattern="yyyy-MM-dd"  styleClass="searchinpt">
+
+                </p:calendar>
+                <p:spacer width="10px"/>
+                <p:outputLabel for="enddatetimeIncome" value="EndDate:" style="font-size: small" />
+                <p:spacer width="5px"/>
+                <p:calendar id="enddatetimeIncome" value="#{income.endCalendar}" showOn="button" readonlyInput="true" maxdate="#{pokerReport.today}"  pattern="yyyy-MM-dd"  styleClass="searchinpt">
+
+                </p:calendar>
+                <p:spacer width="15px"/>
+                <p:commandButton  id="incomeSubmitDate" value="Submit" action="#{income.initIncome}"  update="first:FormIncome:incomeList" oncomplete="PF('tblIncome').clearFilters();" icon="ui-icon-check" />
+            </p:columnGroup>
+        </p:panelGrid>
+        <p:panelGrid id="gridIncomeList" columns="8" styleClass="incomearea"  >
+
+            <p:dataTable id="incomeList" var="dl"  value="#{income.totalIncome}" widgetVar="tblIncome"   style="font-size:small"  paginatorPosition="bottom" styleClass="myTable"
+                         paginator="true" rows="7" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+                <p:column style="text-align: center;width: 14%" headerText="Poker(K)" filterBy="#{dl.casinoRake}" filterStyle="display: none" sortBy="#{dl.casinoRake}" >
+                    <h:outputText value="#{dl.casinoRake}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 18%" headerText="EntryFee(K)" filterBy="#{dl.entryFee}" filterStyle="display: none" sortBy="#{dl.entryFee}" >
+                    <h:outputText value="#{dl.entryFee}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Tourney(K)" filterBy="#{dl.tourney}" filterStyle="display: none" sortBy="#{dl.tourney}" >
+                    <h:outputText value="#{dl.tourney}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 20%" headerText="SlotMachine(K)" filterBy="#{dl.slot}" filterStyle="display: none" sortBy="#{dl.slot}" >
+                    <h:outputText value="#{dl.slot}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Costs(K)" filterBy="#{dl.costsDb}" filterStyle="display: none" sortBy="#{dl.costsDb}" >
+                    <h:outputText value="#{dl.costsDb}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Total(K)" filterBy="#{dl.total}" filterStyle="display: none" sortBy="#{dl.total}" >
+                    <h:outputText value="#{dl.total}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 20%" headerText="Your Percent(K)" filterBy="#{dl.percent}" filterStyle="display: none" sortBy="#{dl.percent}" >
+                    <h:outputText value="#{dl.percent}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 30%" headerText="Date" filterBy="#{dl.date}" filterStyle="display: none" sortBy="#{dl.date}" >
+                    <h:outputText value="#{dl.date}" />
+                </p:column>
+
+
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column  footerText="#{income.sumCasinoRake}" style="color: gold"/>
+                        <p:column footerText="#{income.sumEntryfee}" style="color: gold"/>
+                        <p:column footerText="#{income.sumTourney}" style="color: gold"/>
+                        <p:column footerText="#{income.sumSlot}" style="color: gold"/>
+                        <p:column footerText="#{income.sumCostsDb}" style="color: gold"/>
+                        <p:column footerText="#{income.sumTotal}" style="color: gold"/>
+                        <p:column footerText="#{income.sumPercent}" style="color: gold" />
+                        <p:column footerText="Total" />
+                    </p:row>
+                </p:columnGroup>
+            </p:dataTable>
+
+        </p:panelGrid>
+    </p:panel>
+
+
+</f:view>
+</html>

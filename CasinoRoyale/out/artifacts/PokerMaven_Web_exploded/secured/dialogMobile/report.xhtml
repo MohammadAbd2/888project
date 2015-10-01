@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+
+<p:panel id="panelReport">
+<p:panelGrid columns="1"  id="calendarPanelReport"  styleClass="searcharea" >
+
+    <p:columnGroup>
+        <p:outputLabel for="startdatetimeReport" value="StartDate:" style="font-size: small"/>
+        <p:spacer width="5px"/>
+        <p:calendar id="startdatetimeReport" value="#{requestList.startCalaedar}" readonlyInput="true" maxdate="#{pokerReport.today}" showOn="button"  pattern="yyyy-MM-dd HH:mm:ss" styleClass="searchinpt" >
+        </p:calendar>
+        <p:spacer width="10px"/>
+        <p:outputLabel for="enddatetimeReport" value="EndDate:" style="font-size: small" />
+        <p:spacer width="5px"/>
+        <p:calendar id="enddatetimeReport" value="#{requestList.endCalendar}" showOn="button" readonlyInput="true" maxdate="#{pokerReport.today}" pattern="yyyy-MM-dd HH:mm:ss"  styleClass="searchinpt">
+        </p:calendar>
+        <p:spacer width="15px"/>
+        <p:commandButton  id="reportSubmitDate" value="Submit" action="#{requestList.initReport}"  update="first:FormReport:reportList" oncomplete="PF('tblReport').clearFilters()" icon="ui-icon-check" />
+    </p:columnGroup>
+</p:panelGrid>
+<p:panelGrid id="gridReportList" columns="9"  styleClass="reportarea">
+
+    <p:dataTable id="reportList" var="dl" editable="true" value="#{requestList.report}" widgetVar="tblReport"  emptyMessage="There is no report."  style="font-size:small"  paginatorPosition="bottom" styleClass="myTable"
+                 paginator="true" rows="9" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+        <f:facet name="header"  >
+            <p:outputPanel >
+                <div align="left">
+                    <p:inputText id="globalFilter" onkeyup="PF('tblReport').filter()" style="width:150px" placeholder="Search" />
+                </div >
+            </p:outputPanel>
+        </f:facet>
+        <p:column style="text-align: center;width: 18%" headerText="Request" filterBy="#{dl.request}" filterStyleClass="filterinpt"  sortBy="#{dl.request}" >
+            <h:outputText value="#{dl.request}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 18%" headerText="Manager" filterBy="#{dl.manager}" filterStyleClass="filterinpt" sortBy="#{dl.manager}" >
+            <h:outputText value="#{dl.manager}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 18%" headerText="Username" filterBy="#{dl.username}" filterStyleClass="filterinpt" sortBy="#{dl.username}" >
+            <h:outputText value="#{dl.username}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 18%" headerText="Transfer" filterBy="#{dl.transferTo}" filterStyleClass="filterinpt" sortBy="#{dl.transferTo}" >
+            <h:outputText value="#{dl.transferTo}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 30%" headerText="Card Number" filterBy="#{dl.cardNumber}" filterStyle="display: none" sortBy="#{dl.cardNumber}" >
+            <h:outputText value="#{dl.cardNumber}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 14%" headerText="Amount(K)" filterBy="#{dl.amount}" filterStyle="display: none" sortBy="#{dl.amount}" >
+            <h:outputText value="#{dl.amount}" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 30%" headerText="Date" filterBy="#{dl.dateRQ}" filterStyle="display: none" sortBy="#{dl.dateRQ}" >
+            <h:outputText value="#{dl.dateRQ}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 30%" headerText="Date Of Submit" filterBy="#{dl.dateDone}" filterStyle="display: none" sortBy="#{dl.dateDone}" >
+            <h:outputText value="#{dl.dateDone}" style="color: darkgrey" />
+        </p:column>
+
+        <p:column style="text-align: center;width: 25%" headerText="Status" filterBy="#{dl.status}" filterStyleClass="filterinpt" sortBy="#{dl.status}" >
+            <h:outputText value="#{dl.status}" style="color: #{dl.statusColor}" />
+
+        </p:column>
+
+    </p:dataTable>
+
+</p:panelGrid>
+</p:panel>
+
+</f:view>
+</html>

@@ -1,0 +1,340 @@
+*,.ui-widget{
+    font-family: 'Titillium Web', sans-serif;
+}
+html,body{
+    height: 100%;
+}
+body{
+    background: #151515;
+    min-height: 600px;
+    min-width: 400px;
+    overflow-x:hidden;
+    overflow-y: auto;
+    margin:0;
+}
+.rpanel{
+    width: 328px;
+    height: 93%;
+    position: absolute;
+    right: 6px;
+    top: 46px;
+    z-index:10;
+    overflow: auto;
+    overflow-x: hidden;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE1MTUxNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMzJSIgc3RvcC1jb2xvcj0iIzBlMGUwZSIgc3RvcC1vcGFjaXR5PSIwLjkiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+    background: -moz-linear-gradient(top,  rgba(21,21,21,1) 0%, rgba(14,14,14,0.9) 33%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(21,21,21,1)), color-stop(33%,rgba(14,14,14,0.9)), color-stop(100%,rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(top,  rgba(21,21,21,1) 0%,rgba(14,14,14,0.9) 33%,rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(top,  rgba(21,21,21,1) 0%,rgba(14,14,14,0.9) 33%,rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(top,  rgba(21,21,21,1) 0%,rgba(14,14,14,0.9) 33%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom,  rgba(21,21,21,1) 0%,rgba(14,14,14,0.9) 33%,rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#151515', endColorstr='#00000000',GradientType=0 );
+
+}
+.ui-tabs .ui-tabs-nav li a{
+    font-size: 14px;
+}
+.centeredPanel {
+    margin: 100px auto;
+    max-width: 400px;
+}
+.centeredPanel table{
+    width: 100%;
+    padding: 20px;
+}
+.centeredPanel input{
+    width: 94%;
+}
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield{
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    font-family: 'Titillium Web', sans-serif;
+}
+.ui-panelgrid{
+    width: 100%;
+}
+.ui-panelgrid td{
+    font-size: 15px;
+}
+.ui-panelgrid td.value span{
+    height: 45px;
+    display: block;
+    line-height: 45px;
+}
+.ui-panelgrid .ui-panelgrid-cell{
+    border: 0;
+}
+.ui-state-default.blue,.ui-widget-content .ui-state-default.blue, .ui-widget-header .ui-state-default.blue{
+    background: #1d86eb;
+}
+.ui-state-default.blue:hover,.ui-widget-content .ui-state-default.blue:hover, .ui-widget-header .ui-state-default.blue:hover{
+    background: #0066c8;
+}
+.ui-state-default.blue:disabled,.ui-state-default.blue:disabled:hover{
+    opacity: .5;
+    cursor: default;
+    background: #0066c8;
+}
+.blue .fa {
+    color: lightgray;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+}
+.centeredPanel .ui-panel-footer.ui-widget-content{
+    background: #000000;
+    margin: 0;
+    padding: 10px 0;
+}
+.centeredPanel .ui-panel-footer.ui-widget-content a{
+    color: #1d86eb;
+    font-size: 15px;
+    text-decoration: none;
+}
+.centeredPanel .ui-panel-footer.ui-widget-content a:hover{
+    color: #0066c8;
+}
+.ui-layout-unit {
+    padding: 0;
+    min-height: 700px;
+}
+.ui-layout-unit .ui-layout-unit-content{
+    padding: 0;
+}
+.ui-accordion .ui-accordion-content{
+    padding: 0;
+    margin: 0 1px;
+    font-size: 15px;
+    overflow: hidden;
+}
+.ui-toolbar .ui-state-default,.ui-toolbar .ui-widget-content .ui-state-default,.ui-toolbar .ui-widget-header .ui-state-default,.ui-toolbar .ui-widget .ui-widget{
+    font-size: 18px;
+    font-weight: normal;
+}
+.ui-toolbar .ui-state-default .fa,.ui-toolbar .ui-widget-content .ui-state-default .fa,.ui-toolbar .ui-widget-header .ui-state-default .fa,.ui-toolbar .ui-widget .ui-widget .fa{
+    font-size: 19px;
+    color: dodgerblue;
+    margin-top: -8px;
+    line-height: 17px;
+}
+.ui-toolbar .ui-separator{
+    width: 20px;
+}
+.ui-menu .ui-menuitem-link{
+    font-size: 16px;
+    padding: 10px;
+}
+.ui-menu .ui-menuitem-link .ui-menuitem-icon{
+    font-size: 16px;
+    width: 25px;
+}
+.ui-messages div > span{
+    display: none;
+}
+.ui-messages-info, .ui-messages-warn, .ui-messages-error, .ui-messages-fatal{
+    margin: 0;
+}
+.ui-messages-info-summary, .ui-messages-warn-summary, .ui-messages-error-summary, .ui-messages-fatal-summary, .ui-message-info-summary, .ui-message-warn-summary, .ui-message-error-summary, .ui-message-fatal-summary{
+    font-size: 15px;
+    font-weight: normal;
+}
+.ui-panel {
+    border: 0;
+    padding: 5px;
+}
+.ui-panel .ui-panel-content {
+    padding: 0;
+    border: 0;
+}
+.ui-datalist .ui-datalist-empty-message{
+    padding: 0;
+    border: 0;
+}
+.ui-widget-content{
+    padding: 0;
+    border: 0;
+}
+.incomearea tbody.ui-widget-content{
+    height: 252px;
+
+}
+.ui-datalist .ui-datalist-nobullets{
+    padding: 0;
+    margin: 0;
+}
+.ui-datalist .ui-datalist-nobullets .ui-datalist-item{
+    border-bottom: 1px solid rgba(255,255,255,.2);
+    height: 25px;
+    line-height: 25px;
+    padding: 5px;
+}
+.ui-datalist .ui-datalist-nobullets .ui-datalist-item:hover{
+    background: rgba(0,0,0,.2);
+}
+.ui-datalist .ui-datalist-nobullets .ui-datalist-item > span{
+    float: right;
+    color: gold;
+}
+.ui-datalist .ui-datalist-nobullets .ui-datalist-item > button{
+    padding: 1px;
+    font-size: 11px;
+    background: rgba(255,0,0,.4);
+    height: 23px;
+    line-height: 20px;
+}
+.ui-datalist .ui-datalist-nobullets .ui-datalist-item > button > *{
+    line-height: 15px;
+}
+.cashoutarea button.ui-state-default,.cashoutarea  .ui-widget-content button.ui-state-default,.cashoutarea  .ui-widget-header button.ui-state-default{
+    padding: 1px;
+    font-size: 11px;
+    height: 20px;
+    position: absolute;
+}
+.cashoutarea button.ui-state-default > *,.cashoutarea  .ui-widget-content button.ui-state-default > *,.cashoutarea  .ui-widget-header button.ui-state-default > *{
+    line-height: 15px;
+}
+
+.activetables .ui-datalist .ui-datalist-nobullets .ui-datalist-item{
+    height: 35px;
+    line-height: 35px;
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.activetables .ui-datalist .ui-datalist-nobullets .ui-datalist-item > a{
+    padding: 5px;
+    display: block;
+    height: 25px;
+    line-height: 25px;
+}
+.activetables .ui-datalist .ui-datalist-empty-message{
+    height: 25px;
+    line-height: 25px;
+    padding: 5px;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.ui-datalist .ui-datalist-nobullets .ui-datalist-item span.pcount{
+    float: right;
+}
+
+.ui-tabs-panels{
+    height: 400px;
+    overflow: auto;
+}
+.ui-tabs .ui-tabs-panel {
+    padding: 0;
+}
+.ui-tabs .ui-tabs-panel a{
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    height: 37px;
+    margin: 1px;
+    padding: 6px;
+    text-align: center;
+    width: 40px;
+}
+.ui-tabs .ui-tabs-panel a:hover{
+    background: rgba(255, 0, 0, 0.5);
+}
+.ui-column-title{
+    font-size: 12px;
+}
+.ui-datatable-tablewrapper{
+    height: 309px;
+}
+.pokerreportarea .ui-datatable-tablewrapper{
+    height: 311px;
+}
+.messegesarea .ui-datatable-tablewrapper{
+    height: 157px;
+}
+.reportarea .ui-datatable-tablewrapper{
+    height: 302px;
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th{
+    border: 1px solid rgba(255,255,255,.2);
+    font-size: 12px;
+}
+.ui-datatable tbody .ui-datatable-empty-message td{
+    padding: 50px 0;
+    border: 0px;
+    text-align: center;
+}
+
+.ui-widget-header .ui-inputfield.searchinpt, .ui-widget-content .ui-inputfield.searchinpt {
+    margin: 0;
+    padding: 5px;
+}
+.ui-widget-header .searchinpt .ui-inputfield, .ui-widget-content .searchinpt .ui-inputfield {
+    margin: 0;
+    padding: 5px;
+}
+.searcharea{
+    margin: 0;
+    padding: 5px 0;
+}
+.searcharea td{
+    text-align: right;
+}
+.ui-widget-header .ui-inputfield.filterinpt, .ui-widget-content .ui-inputfield.filterinpt {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+.reportarea .ui-widget-header .ui-inputfield.filterinpt, .reportarea .ui-widget-content .ui-inputfield.filterinpt {
+    display: block;
+    width: 100%;
+}
+@media only screen and (max-width : 1024px) {
+/*@media screen and (max-width:736px) {*/
+    body{
+        min-height: 550px;
+        overflow-y: hidden;
+    }
+    .ui-tabs .ui-tabs-nav li a{
+        font-size: 12px;
+    }
+    .ui-menu.ui-menu-dynamic{
+        width: 220px;
+    }
+    .ui-menu .ui-menuitem-link{
+        font-size: 12px;
+        padding: 8px;
+    }
+    .ui-toolbar .ui-state-default, .ui-toolbar .ui-widget-content .ui-state-default, .ui-toolbar .ui-widget-header .ui-state-default, .ui-toolbar .ui-widget .ui-widget{
+        font-size: 13px;
+    }
+    .ui-toolbar .ui-state-default .fa, .ui-toolbar .ui-widget-content .ui-state-default .fa, .ui-toolbar .ui-widget-header .ui-state-default .fa, .ui-toolbar .ui-widget .ui-widget .fa{
+        font-size: 12px;
+    }
+    .rpanel{
+        width: 250px;
+        top: 42px;
+    }
+    .ui-accordion .ui-accordion-header {
+        font-size: 15px;
+    }
+    .ui-datalist .ui-datalist-nobullets .ui-datalist-item {
+        font-size: 13px;
+    }
+    .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th{
+        padding: 4px;
+    }
+    .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th{
+        font-size: 9px;
+    }
+    .ui-dialog .ui-dialog-content{
+        padding: 2px;
+    }
+    .ui-widget-content.ui-tabs-top{
+        min-width: 100%;
+        height: 100%;
+    }
+    .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield{
+        font-size: 11px;
+
+    }
+}

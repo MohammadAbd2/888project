@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:outputStylesheet name="style.css" library="css"/>
+    <h:body>
+<p:panel >
+    <p:panelGrid columns="5" >
+
+        <p:dataTable id="tableMsg" var="dl"  value="#{messages.offlineMsg}"  widgetVar="msgBox"  emptyMessage="There is no messages." style="font-size:small" rowsPerPageTemplate="5,10" paginatorPosition="bottom"
+                     paginator="true" rows="4" styleClass="messegesarea"  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+            <f:facet name="header"  >
+                <p:outputPanel >
+                    <div align="right" style="float:right">
+                        <h:outputText value="#{messages.numberUnreadMsg}" style="color: #{messages.numberColor}" />
+                        <h:outputText value=" unread messages" />
+                    </div >
+                    <div align="left">
+                        <p:inputText id="globalFilter" onkeyup="PF('msgBox').filter()" styleClass="searchinpt" placeholder="Search" />
+                    </div >
+                </p:outputPanel>
+            </f:facet>
+            <p:column  >
+                <h:outputText value="#{dl.id}" style="color: darkgrey" />
+            </p:column>
+            <p:column style="text-align: center;width: 35%" headerText="Subject"  filterBy="#{dl.subject}" filterStyle="display:none" sortBy="#{dl.subject}">
+                <h:outputText value="#{dl.subject}" style="color: darkgrey" />
+            </p:column>
+
+            <p:column style="text-align: center;width: 25%" headerText="Date" filterBy="#{dl.date}" filterStyle="display: none" sortBy="#{dl.date}">
+                <h:outputText value="#{dl.date}" style="color: darkgrey" />
+            </p:column>
+
+            <p:column style="text-align: center;width: 18%" headerText="Status" filterBy="#{dl.status}" filterStyle="display: none" sortBy="#{dl.status}">
+                <h:outputText value="#{dl.status}" style="color: #{dl.statusColor}" />
+            </p:column>
+
+            <p:column style="text-align: center;width: 20%" headerText="" >
+                <p:commandButton id="btnMsgView" value="view" widgetVar="cancelbtn"  icon="fa fa-search"  style="font-size: smaller" actionListener="#{userDAO.readMsg(dl)}" action="#{messages.initmsg}" update="FormMessages:tableMsg,:FormMessages:msgDesc" oncomplete="PF('msgBox').clearFilters()"  >
+                </p:commandButton>
+            </p:column>
+
+
+        </p:dataTable>
+
+    </p:panelGrid>
+</p:panel>
+<p:panel header="Message Descriptions" style="margin: 0 10px;"  >
+    <p:outputPanel style="height: 100px; padding: 20px;" >
+       <h:outputText readonly="true"  id="msgDesc"  value="#{userDAO.messageDescription}" style="font-size: 12px" escape="false" />
+    </p:outputPanel>
+
+</p:panel>
+    </h:body>
+</f:view>
+</html>

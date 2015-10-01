@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+
+   <!-- <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>-->
+    <h:outputStylesheet name="style.css" library="css"/>
+    <p:panel styleClass="ui-panel">
+        <p:fileUpload fileUploadListener="#{depositReport.handleFileUpload}" mode="advanced"
+                      update="totalAmountBank,msgInfo" auto="true" sizeLimit="200000" allowTypes="/(\.|\/)(csv)$/" />
+        <p:messages id="msgInfo"  showDetail="true" globalOnly="true"/>
+        <p:panelGrid columns="1"  id="calendarPanelDepositReport"  styleClass="searcharea" >
+            <p:columnGroup>
+                <p:outputLabel for="datetimeDepositReport" value="Date:" style="font-size: small"/>
+                <p:spacer width="5px"/>
+                <p:inputMask  mask="9999/99/99"  id="datetimeDepositReport" value="#{depositReport.date}" />
+
+                <p:spacer width="15px"/>
+                <p:commandButton  id="depositReportSubmitDate" value="Submit" action="#{depositReport.getTotalDbDeposit}"  update="totalAmountDB" icon="ui-icon-check" />
+            </p:columnGroup>
+        </p:panelGrid>
+    </p:panel>
+    <p:panelGrid columns="2">
+        <p:outputLabel for="totalAmountBank" value="TotalBankDeposit" />
+        <h:outputText  id="totalAmountBank" value="#{depositReport.totalDeposit}" />
+        <p:outputLabel for="totalAmountDB" value="TotalDBDeposit" />
+        <h:outputText  id="totalAmountDB" value="#{userDAO.totalDepositDb}" />
+    </p:panelGrid>
+</f:view>
+</html>

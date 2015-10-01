@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <p:panel id="panelSlotMachineReport">
+        <p:panelGrid columns="1"  id="calendarPanelSlotMachineReport"  styleClass="searcharea" >
+            <p:columnGroup>
+                <p:outputLabel for="startDateSlotMachineReport" value="StartDate:" style="font-size: small"/>
+                <p:spacer width="5px"/>
+                <p:calendar id="startDateSlotMachineReport" value="#{slotMachineReport.startCalaedar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true" mindate="#{pokerReport.sevenDaysAgo}"  maxdate="#{pokerReport.today}"  styleClass="searchinpt">
+                </p:calendar>
+                <p:spacer width="10px"/>
+                <p:outputLabel for="endDateSlotMachineReport" value="EndDate:" style="font-size: small"/>
+                <p:spacer width="5px"/>
+                <p:calendar id="endDateSlotMachineReport" value="#{slotMachineReport.endCalendar}" showOn="button"  pattern="yyyy-MM-dd" readonlyInput="true" mindate="#{pokerReport.sevenDaysAgo}"  maxdate="#{pokerReport.today}"  styleClass="searchinpt">
+                </p:calendar>
+                <p:spacer width="15px"/>
+                <p:commandButton  id="slotMachineReportSubmitDate" value="Submit" action="#{slotMachineReport.initSlotMachineReportUser}"  update=":FormCashier:tabCashier:tableSlotMachineReport" oncomplete="PF('tblSlotMachine').clearFilters();"  icon="ui-icon-check" />
+            </p:columnGroup>
+        </p:panelGrid>
+
+        <p:panelGrid columns="6" >
+
+            <p:dataTable id="tableSlotMachineReport" var="dl4" value="#{slotMachineReport.slotMachineReports}" widgetVar="tblSlotMachine"  emptyMessage="There is no SlotMachine Report."  style="font-size:small"  paginatorPosition="bottom" styleClass="myTable"
+                         paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                <f:facet name="header"  >
+                    <p:outputPanel >
+                        <div align="left">
+                            <p:inputText id="globalFilter" onkeyup="PF('tblSlotMachine').filter()" styleClass="searchinpt" placeholder="Search" />
+                        </div >
+                    </p:outputPanel>
+                </f:facet>
+                <p:column style="text-align: center;width: 14%" headerText="StartBank(K)" filterBy="#{dl4.startBank}" filterStyle="display: none" sortBy="#{dl4.startBank}" >
+                    <h:outputText value="#{dl4.startBank}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="EndBank(K)" filterBy="#{dl4.endBank}" filterStyle="display: none" sortBy="#{dl4.endBank}" >
+                    <h:outputText value="#{dl4.endBank}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Win(K)" filterBy="#{dl4.amountWin}" filterStyle="display: none" sortBy="#{dl4.amountWin}" >
+                    <h:outputText value="#{dl4.amountWin}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Total(K)" filterBy="#{dl4.amountTotal}" filterStyle="display: none" sortBy="#{dl4.amountTotal}" >
+                    <h:outputText value="#{dl4.amountTotal}" style="color: darkgrey" />
+
+                </p:column>
+
+                <p:column style="text-align: center;width: 30%" headerText="Descriptions" filterBy="#{dl4.descriptions}" filterStyle="display: none" sortBy="#{dl4.descriptions}" >
+                    <h:outputText value="#{dl4.descriptions}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 30%" headerText="Date" filterBy="#{dl4.date}" filterStyle="display: none" sortBy="#{dl4.date}" >
+                    <h:outputText value="#{dl4.date}" />
+                </p:column>
+
+
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column  footerText=""/>
+                        <p:column footerText=""/>
+                        <p:column footerText="" />
+                        <p:column footerText="#{slotMachineReport.sumTotal} K" style="color: gold"/>
+                        <p:column footerText="" />
+                        <p:column footerText="Total" />
+                    </p:row>
+                </p:columnGroup>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+    </p:panel>
+    <p:blockUI block=":FormCashier:tabCashier:panelSlotMachineReport" trigger=":FormCashier:tabCashier:slotMachineReportSubmitDate">
+        <h:graphicImage value="/images/Loading1.gif" />
+    </p:blockUI>
+</f:view>
+</html>

@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata> <f:event type="postAddToView" listener="#{jqueryAutoComplete.searchjson}"  /></f:metadata>
+    <f:metadata> <f:event type="preRenderView" listener="#{loginBean.createSession}" /></f:metadata>
+    <h:head>
+        <title>Game</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'/>
+        <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+        <script type='text/javascript'>
+            (function () {	var done = false;	var script = document.createElement('script'); script.async = true;	script.type = 'text/javascript';	script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) {	if (!done &amp;&amp; (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: 'ff63c23f-d0f0-43dc-8fa9-69380999f977', f: true }); done = true;	}	};	})();
+        </script>
+        <h:outputScript>
+            function slotMachine() {
+
+            $(".pokerid").css("display", "none");
+            $(".bjackid").css("display", "none");
+            $(".slotid").css("display", "block");
+            }
+
+            function Poker() {
+            $(".pokerid").css("display", "block");
+            $(".slotid").css("display", "none");
+            $(".bjackid").css("display", "none");
+
+            }
+
+            function blackJack() {
+
+            $(".slotid").css("display", "none");
+            $(".pokerid").css("display", "none");
+            $(".bjackid").css("display", "block");
+
+            }
+            $(document).ready(function () {
+            $('#FormMenu\\:slidePanel').bind({
+            click: function () {
+            $(this).find('.fa').toggleClass('fa-angle-double-up').toggleClass('fa-angle-double-down');
+            _panel = $('#FormAccordionPanel\\:ap');
+            _panel.toggle(function () {
+            function slidDownClass() {
+            _panel.animate({height: "0px"}, 1000);
+            }
+            function slidUpClass() {
+            _panel.animate({height: "90px"}, 1000);
+            }
+            });
+            }
+            })
+            $('#FormMenu\\:reloadGame').bind({
+            click: function () {
+            $(this).find('.fa').addClass('fa-spin');
+            setTimeout(function(){
+            $('#FormMenu\\:reloadGame').find('.fa').removeClass('fa-spin');
+            },5000)
+            }
+            })
+
+            setInterval(function(){
+            var LoginName = '#{loginBean.userN}';
+            $('.purechat-name-input').val(LoginName).attr({'readonly':'true'});
+            $('.purechat-content').next('div').html('');
+            $('.purechat-title-image,.btn-pop-out').hide();
+            }, 1000);
+            });
+        </h:outputScript>
+    </h:head>
+    <h:body>
+        <f:facet name="last">
+            <h:outputStylesheet name="style.css" library="css" />
+        </f:facet>
+        <h:form id="FormMultiAccount">
+            <p:dialog header="MultiAccount" dynamic="true"  id="multiAccount"  widgetVar="dlgMultiAccount"  styleClass="dialog" resizable="false" closable="false" closeOnEscape="false" modal="true"  showEffect="blind" hideEffect="blind" >
+                <p:panelGrid columns="1">
+                    <h:outputText value="You Can Access to System Just With Username: #{userDAO.playerMultiAccount}" style="display:block;color: gold"/>
+                    <p:commandButton   action="#{loginBean.logout}" value="Logout" icon="fa fa-sign-out"  style="display:block;float: right" />
+                </p:panelGrid>
+            </p:dialog>
+            <p:dialog header="Warning Pc" dynamic="true"  id="changePc"  widgetVar="dlgChangePc"  styleClass="dialog" resizable="false" closable="false" closeOnEscape="false" modal="true"  showEffect="blind" hideEffect="blind" width="100%" style="max-width: 250px;" >
+                <p:panelGrid columns="1">
+                    <h:outputText value="You Have Login with another PC! Please Enter Your Email." style="display:block;color: gold"/>
+                    <p:inputText id="emailinput" value="#{loginBean.emailCheck}" size="30" type="email"  placeholder="Email address"/>
+                    <p:panel>
+                        <p:commandButton id="btnOtherPcLogin"   action="#{loginBean.checkChangePc}" value="Enter" icon="fa fa-sign-out" oncomplete="PF('varOtherPcLogin').hide();"  /> or  <p:commandButton id="btnChangePc" oncomplete="PF('varChangePc').hide();" action="#{loginBean.changePc}" value="Change Pc" icon="fa fa-sign-out"   />
+                        <p:tooltip id="toolTipOtherPcLogin" for="btnOtherPcLogin" widgetVar="varOtherPcLogin" value="Access to login without change your pc"  />
+                        <p:tooltip id="toolTipChangePc" for="btnChangePc" widgetVar="varChangePc" value="This option set this devices to primary"  />
+                    </p:panel>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form id="FormMsgAlert">
+            <p:dialog header="Warning Messages" dynamic="true"  id="MsgAlert"  widgetVar="dlgMsgAlert"  styleClass="dialog" resizable="false" closable="false" closeOnEscape="false" modal="true"  showEffect="blind" hideEffect="blind" >
+                <p:panel>
+                    <h:outputText value="You Have " style="font-size: large;color: gold"/>
+                    <h:outputText value=" #{userDAO.msgCounter}" style="font-size: large;color: red"/>
+                    <h:outputText value=" unRead Messages From Admin" style="font-size: large;color: gold"/>
+                    <p:spacer width="2px"/>
+                    <p:commandButton actionListener="#{userDAO.resetMessageDescription}" action="#{messages.initmsg}" icon="fa fa-envelope-o" update=":FormMessages:tableMsg,:FormMessages:msgDesc" onclick="PF('dlgMessages').show();" oncomplete="PF('dlgMsgAlert').hide();" value=" Show Messages"   style="display:block;float: right;font-size: small" />
+                </p:panel>
+            </p:dialog>
+        </h:form>
+        <p:outputPanel id="page" style="width:100%;height:100%;position: absolute">
+                <h:form id="FormMenu">
+                    <p:toolbar style="background: none; position: absolute; top: 0; right: 0; width: 50%; z-index:20; border: 0;">
+
+                        <f:facet name="right">
+                            <p:menuButton value="Menu">
+                                <p:menuitem value=" Poker Game" icon="fa fa-chevron-right fa-fw" onclick="Poker();" />
+                                <p:menuitem value=" SlotMachine Game" icon="fa fa-chevron-right fa-fw" onclick="slotMachine();"/>
+                                <p:separator></p:separator>
+                                <p:menuitem value=" Money Making" icon="fa fa-dollar fa-fw" onclick="PF('dlgMmaking').show();"/>
+                                <p:menuitem value=" Account Settings" icon="fa fa-user fa-fw" action="#{accountInformationBean.getUserAccountinfo}" oncomplete="PF('dlgAcSettings').show();" />
+                                <p:menuitem value=" Messages" icon="fa fa-envelope-o fa-fw" actionListener="#{userDAO.resetMessageDescription}" action="#{messages.initmsg}" update=":FormMessages:tableMsg,:FormMessages:msgDesc" onclick="PF('dlgMessages').show();" oncomplete="PF('msgBox').clearFilters();"/>
+                                <p:separator rendered="#{loginBean.publ==true }"></p:separator>
+                                <p:menuitem value=" Report" icon="fa fa-pencil-square-o fa-fw" actionListener="#{requestList.caledarset}" action="#{requestList.initReport}"
+                                            rendered="#{loginBean.publ==true }" update=":FormReport:reportList,:FormReport:calendarPanelReport" oncomplete="PF('tblReport').clearFilters();" onclick="PF('dlgReport').show();" />
+                                <p:menuitem value=" Total Income" icon="fa fa-database fa-fw" actionListener="#{income.caledarset}" action="#{income.initIncome}"
+                                            rendered="#{loginBean.admin==true }" update=":FormIncome:incomeList,:FormIncome:calendarPanelIncome" oncomplete="PF('tblIncome').clearFilters();" onclick="PF('dlgIncome').show();" />
+                                <p:menuitem value=" BankRoll" icon="fa fa-database fa-fw" rendered="#{loginBean.admin==true }"  onclick="PF('dlgBankRoll').show();" />
+
+                                <p:separator></p:separator>
+                                <p:menuitem value="Logout" action="#{loginBean.logout}"  icon="fa fa-sign-out fa-fw" >
+                                    <p:confirm header="Confirmation" message="Are you sure logout?" icon="ui-icon-alert" />
+                                </p:menuitem>
+                            </p:menuButton>
+                            <p:commandButton value="Cashier" icon="fa fa-money"  onclick="PF('dlgCashier').show();" />
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+                            <p:commandButton id="reloadGame" action="#{loginBean.reLoad}"  update=":pokerid"  icon="fa fa-refresh"/>
+                            <p:commandButton id="slidePanel" icon="fa fa-angle-double-up" >
+
+                            </p:commandButton>
+                            <p:confirmDialog styleClass="dialog" global="true" showEffect="slide" hideEffect="slide">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                            <p:growl id="messages" showDetail="true" globalOnly="true"/>
+                        </f:facet>
+
+                    </p:toolbar>
+                </h:form>
+                <h:form id="FormBankRoll">
+                    <p:dialog header="BankRoll" dynamic="true" id="bankRoll"  widgetVar="dlgBankRoll"  styleClass="dialog" resizable="false" width="70%" height="50%" closeOnEscape="true" showEffect="size" hideEffect="drop" closable="true"  style="max-width: 1200px;position: absolute">
+                        <ui:include  src="dialog/bankroll.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormReport">
+                    <p:dialog header="Report" dynamic="true" id="report"  widgetVar="dlgReport"  styleClass="dialog" resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="size" hideEffect="drop" closable="true"  style="max-width: 1200px;position: absolute">
+                        <ui:include  src="dialog/report.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormMessages">
+                    <p:dialog header="Messages" dynamic="true"  id="messageBox"  widgetVar="dlgMessages" modal="false" styleClass="dialog" fitViewport="true"  resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="size" hideEffect="drop" closable="true" style="max-width: 800px;position: absolute" >
+                        <ui:include  src="dialog/messageBox.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormCashier">
+                    <p:dialog header="Cashier" dynamic="true"  id="cashier"  widgetVar="dlgCashier"  styleClass="dialog" resizable="false" width="100%" height="100%" closeOnEscape="true" showEffect="scale" hideEffect="scale" closable="true" style="max-width: 1000px; max-height: 700px; position: absolute; overflow:auto;">
+                        <ui:include  src="dialog/cashier.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormMoneyMaking">
+                    <p:dialog header="MoneyMaking" dynamic="true"  id="MoneyMaking" widgetVar="dlgMmaking" modal="false"  styleClass="dialog" resizable="false"  width="100%" height="100%" closeOnEscape="true"  showEffect="slide" hideEffect="slide" closable="true"  style="max-width: 800px;position: absolute">
+                       <!-- <p:ajax event="close"  resetValues="true" update=":Form:InvitePlayer"/>-->
+                        <ui:include  src="dialog/moneymaking.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormAccountSettings">
+                    <p:dialog header="Account Settings" dynamic="true"  id="accountSettings" widgetVar="dlgAcSettings" modal="false"  styleClass="dialog" resizable="false"  width="100%" height="50%"  closeOnEscape="true"  showEffect="blind" hideEffect="clip" closable="true"  style="max-width: 800px;position: absolute">
+                        <!-- <p:ajax event="close"  resetValues="true" update=":Form:InvitePlayer"/>-->
+                        <ui:include  src="dialog/accountSettings.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormdialogInfo">
+                    <p:dialog id="dialogInfo" header="#{accountInformationBean.username} information"  styleClass="dialog" dynamic="true" resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="fold" hideEffect="scale" widgetVar="dlgAccInfo" closable="true" style="max-width: 1000px;position: absolute">
+                        <ui:include  src="dialog/accountInfo.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormIncome">
+                    <p:dialog header="Total Income" dynamic="true"  id="income" widgetVar="dlgIncome"  styleClass="dialog" resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="fold" hideEffect="scale" closable="true" style="max-width: 1000px;position: absolute">
+                        <ui:include  src="dialog/income.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormCashout">
+                    <p:dialog header="Cashout List" dynamic="true"  id="cashout" widgetVar="dlgCashout"  styleClass="dialog" resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="fold" hideEffect="scale" closable="true" style="max-width: 1200px;position: absolute">
+                        <ui:include  src="dialog/cashout.xhtml" />
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormDeposit">
+                    <p:dialog header="Deposit List" dynamic="true"  id="deposit" widgetVar="dlgDeposit"  styleClass="dialog" resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="fold" hideEffect="scale" closable="true" style="max-width: 1200px;position: absolute" >
+                        <p:panel id="panelDeposit" styleClass="ui-panel">
+                            <p:fileUpload id="btnUploadFile" fileUploadListener="#{parsingCsvFile.handleFileUpload}"  mode="advanced" update="FormDeposit:msgInfo,FormDeposit:formRql:depositDL,FormDeposit:formDpl" auto="true" sizeLimit="200000" allowTypes="/(\.|\/)(csv)$/" oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 3000)" />
+                            <p:messages id="msgInfo"  showDetail="true" globalOnly="true">
+                                <p:effect type="pulsate" event="load" delay="1000" />
+                            </p:messages>
+                        </p:panel>
+                        <p:tab title="DepositWaitingList">
+                            <p:panelGrid columns="5">
+                                <h:form id="formDpl" >
+                                    <p:dataTable id="depositWDL" var="dl1" value="#{requestList.dpl}"   scrollable="true" scrollHeight="200" emptyMessage="There is no waiting deposit request." style="font-size:small"  styleClass="myTable">
+                                        <p:column style="text-align: center;width: 10%" headerText="Username">
+                                            <h:outputText value="#{dl1.username}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 30%" headerText="Card Number"  >
+                                            <h:outputText value="#{dl1.cardNumber}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 14%" headerText="Amount(K)"  >
+                                            <h:outputText value="#{dl1.amount}" />
+                                        </p:column>
+                                        <p:column style="text-align: center" headerText="Date" >
+                                            <h:outputText value="#{dl1.dateRQ}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 10%" headerText="Status" >
+                                            <h:outputText value="#{dl1.status}" style="color: #{dl1.statusColor}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab title="DepositRequestList">
+                            <p:panelGrid columns="5">
+                                <h:form id="formRql" >
+                                    <p:dataTable id="depositDL" var="dl2" value="#{requestList.dprl}"   scrollable="true" emptyMessage="There is no deposit action in 1 min ago." scrollHeight="200" style="font-size:small"  styleClass="myTable">
+                                        <p:column style="text-align: center;width: 10%" headerText="Manager">
+                                            <h:outputText value="#{dl2.manager}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 10%" headerText="Username">
+                                            <h:outputText value="#{dl2.username}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 30%" headerText="Card Number"  >
+                                            <h:outputText value="#{dl2.cardNumber}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 14%" headerText="Amount(K)"  >
+                                            <h:outputText value="#{dl2.amount}" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 25%" headerText="Date" >
+                                            <h:outputText value="#{dl2.dateRQ}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 25%" headerText="Date of Submit" >
+                                            <h:outputText value="#{dl2.dateDone}" style="color: darkgrey" />
+                                        </p:column>
+                                        <p:column style="text-align: center;width: 10%" headerText="Status" >
+                                            <h:outputText value="#{dl2.status}" style="color: #{dl2.statusColor}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:dialog>
+                </h:form>
+                <h:form id="FormAccordionPanel" onkeypress="if (event.keyCode == 13) { document.getElementById('FormAccordionPanel:ap:submit').click(); return false; }">
+                    <p:growl id="msgs"  showDetail="true" globalOnly="true" />
+                    <p:accordionPanel   activeIndex="0,1,2,3,4" id="ap" multiple="true" widgetVar="accordion"  dynamic="true" styleClass="rpanel" >
+                        <p:tab  title="Account Balance" >
+                            <p:panel  id="requestPanel">
+                                <p:dataList id="waitingDataPanel"  value="#{requestList.rlp}"  var="dl3" itemType="none" emptyMessage="" >
+                                    <h:panelGroup >
+                                        <p:column  >
+                                            <h:outputText value="#{dl3.request}" />
+                                            <p:spacer width="5px" rendered="#{dl3.cashoutCancel==true}"/>
+                                            <p:commandButton rendered="#{dl3.cashoutCancel==true}" icon="fa fa-close" action="#{userDAO.cancelCashoutUser(dl3)}" update="waitingDataPanel" />
+                                            <p:spacer width="8px" rendered="#{dl3.cashoutCancel==false}"/>
+                                            <p:commandButton rendered="#{dl3.cashoutCancel==false}" icon="fa fa-spin fa-spinner" style="background: none; cursor: default; border-color: rgba(255,255,255,.1); color: lightgray" />
+                                        </p:column>
+                                    </h:panelGroup>
+                                    <h:panelGroup styleClass="chip">
+                                        <p:column  >
+                                            <h:outputText value="#{dl3.amount}K" />
+                                        </p:column>
+                                    </h:panelGroup>
+                                </p:dataList>
+                            </p:panel>
+                            <p:panel  id="chipPanel" styleClass="ui-panel" >
+                                <div class="ui-datalist ui-widget">
+                                <div class="ui-datalist-content ui-widget-content">
+                                <ul class="ui-datalist-data ui-datalist-nobullets">
+                                    <p:outputPanel rendered="#{loginBean.chipOnTable or loginBean.chipOnSlotMachine}">
+                                    <li class="ui-datalist-item">
+                                        <p:outputLabel for="chipB" value="Chips in Bank" />
+                                        <h:outputText id="chipB" value=" #{loginBean.chipBank}K"   styleClass="chip"/>
+                                    </li>
+                                    </p:outputPanel>
+                                <p:outputPanel rendered="#{loginBean.chipOnTable }">
+
+                                    <li class="ui-datalist-item">
+                                        <p:outputLabel for="chipT" value="Chips on Table"/>
+                                        <h:outputText id="chipT" value=" #{loginBean.chipTable}K"  styleClass="chip" />
+                                    </li>
+                                </p:outputPanel>
+                                    <p:outputPanel rendered="#{loginBean.chipOnSlotMachine }">
+
+                                    <li class="ui-datalist-item">
+                                        <p:outputLabel for="chipSlot" value="Chips on SlotMachine" />
+                                        <h:outputText id="chipSlot" value=" #{loginBean.slotBank}K"  styleClass="chip" />
+                                    </li>
+                                    </p:outputPanel>
+                                    <li class="ui-datalist-item">
+                                        <p:outputLabel for="chip" value="Total chips"/>
+                                        <h:outputText id="chip" value=" #{loginBean.chipTotal}K" styleClass="chip" />
+                                    </li>
+                                </ul>
+                                </div></div>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab title="Active Tables">
+                            <p:panel styleClass="ui-panel activetables">
+                                <p:dataList id="activeTablePanel"  value="#{activeTable.activeTables}"  var="at" itemType="none" emptyMessage="There is no Active Table." >
+                                    <p:commandLink actionListener="#{ringGames.openTable(at)}" style="background: #{at.colorActiveTable}; text-decoration: none;">
+                                        <h:panelGroup >
+                                            <p:column >
+                                                <h:outputText value="#{at.tableName}"/>
+                                            </p:column>
+                                        </h:panelGroup>
+                                        <h:panelGroup styleClass="pcount" >
+                                            <p:column  >
+                                                <h:outputText value="#{at.playerSeat}" />
+                                            </p:column>
+                                        </h:panelGroup>
+                                    </p:commandLink>
+                                </p:dataList>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="searchtab" title="Search" rendered="#{loginBean.publ==true }" >
+                            <p:panelGrid columns="2" style="width: auto">
+                                <p:autoComplete id="tags"  value="#{accountInformationBean.username}" size="27" placeholder="Search Player"  completeMethod="#{jqueryAutoComplete.completeItem}"  autoHighlight="true" effect="fade" minQueryLength="2" maxResults="10" />
+                                <p:commandButton id="submit"   icon="fa fa-search" update=":FormdialogInfo:dialogInfo :FormAccordionPanel:msgs  " actionListener="#{userUpline.initUpline}"  action="#{accountInformationBean.info}" ></p:commandButton>
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="depositRq" title="Requests" rendered="#{loginBean.publ==true }" >
+                            <div style="margin: 5px;">
+                                <p:commandButton id="depositReq" style="display: block;width:100%;height:40px; margin-bottom: 5px; background:#{userDAO.colorWaitingBack};color: #{userDAO.colorWaiting}" value="#{userDAO.numberWaiting}" update=":FormDeposit:formDpl,:FormDeposit:formRql" onclick="PF('dlgDeposit').show();"  ></p:commandButton>
+                                <p:commandButton id="cashoutReq" style="display: block;width:100%;height:40px; background:#{userDAO.colorCashoutBack} ;color: #{userDAO.colorCashout}" value="#{userDAO.numberCashout}"  actionListener="#{requestList.caledarset}" action="#{requestList.initCashls}" update=":FormCashout:cashoutList,:FormCashout:calendarPanel" oncomplete="PF('tblCashout').clearFilters()" onclick="PF('dlgCashout').show();"  ></p:commandButton>
+                            </div>
+                        </p:tab>
+                        <p:tab  title="Last Actions" rendered="#{loginBean.publ==true }" >
+                            <p:panel style="padding: 0;border: none">
+
+                                <p:dataList id="lastActionPanel"  value="#{requestList.lastAction}" rows="30" var="dl4"  itemType="none" emptyMessage="There is no last actions record.">
+
+                                    <h:panelGrid columns="3"  id="actionPanel" >
+                                        <h:panelGroup style="display: block;text-align: left;width: 100px; font-size: 12px">
+
+                                            <p:commandLink id="userAction" style="text-decoration: none" title="Time : #{dl4.dateRQ}" update=":FormdialogInfo:dialogInfo :FormAccordionPanel:msgs " actionListener="#{userUpline.initUplineLastAction(dl4)}" action="#{accountInformationBean.lastActionInfo(dl4)}" >
+                                            <p:column >
+                                                <h:outputText value="#{dl4.username}" style="color: gold;" rendered="#{dl4.lastActionAmount==true}" />
+                                                <h:outputText value="#{dl4.manager}" style="color: gold;" rendered="#{dl4.lastActionNewuser==true}" />
+
+                                            </p:column>
+                                                <p:tooltip id="actionTooltip" for="userAction"  style="font-size: smaller;color: darkgoldenrod;position: absolute;text-align:left;display: block"  />
+                                            </p:commandLink>
+                                        </h:panelGroup>
+                                        <h:panelGroup style="display:block;text-align: left;width: 100px; font-size: 12px">
+                                            <p:column  >
+                                                <h:outputText value="#{dl4.request}" rendered="#{dl4.lastActionTransfer != true}" />
+                                                <h:outputText value="#{dl4.transferTo}" style="color: gold;" rendered="#{dl4.lastActionTransfer==true}" />
+                                            </p:column>
+                                        </h:panelGroup>
+                                        <h:panelGroup style="display: block;float: right;width: 100px; font-size: 12px">
+                                            <p:column  >
+                                                <h:outputText value="#{dl4.amount}k" rendered="#{dl4.lastActionAmount==true}"/>
+                                                <h:outputText value="#{dl4.username}" rendered="#{dl4.lastActionNewuser==true}"/>
+                                            </p:column>
+                                        </h:panelGroup>
+                                    </h:panelGrid>
+
+                                </p:dataList>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="siteNews" title="Site News" rendered="#{loginBean.publ==true }" >
+                            <div style="margin: 5px;">
+                                <p:inputTextarea id="inputSiteNews" style="width:93%; margin-bottom: 5px; background-color: floralwhite"  value="#{messages.news}" placeholder="Write news..." autoResize="true"/>
+                                <p:commandButton id="btnsiteNews" style="width:100%; display: block;" value="Publish"  actionListener="#{messages.setSiteNews}" update=":FormAccordionPanel:ap:inputSiteNews"  ></p:commandButton>
+                            </div>
+                        </p:tab>
+                        <p:tab id="onlineMessages" title="Online Messages" rendered="#{loginBean.publ==true }" >
+                            <div style="margin: 5px;">
+                                <p:inputTextarea id="inputonlineMessages" style="width:93%; margin-bottom: 5px; background-color: floralwhite"  value="#{messages.onlineMessages}" placeholder="Write messages..." autoResize="true"/>
+                                <p:commandButton id="btnonlineMessages" style="width:100%; display: block;" value="Send Message"  actionListener="#{messages.setOnlineMessage}" update=":FormAccordionPanel:ap:inputonlineMessages"  ></p:commandButton>
+                            </div>
+                        </p:tab>
+                        <p:tab id="loginAsUser" title="Login As User" rendered="#{loginBean.root==true }" >
+                            <p:panelGrid columns="2" style="width: auto">
+                                <p:autoComplete id="loginAs"  value="#{loginBean.uname}" size="27" placeholder="Username"  completeMethod="#{jqueryAutoComplete.completeItem}" forceSelection="true" autoHighlight="true" effect="fade" minQueryLength="2" maxResults="10" />
+                                <p:commandButton id="btnLoginAs" icon="fa fa-key" ajax="false" action="#{loginBean.loginAsUser}" ></p:commandButton>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                </h:form>
+                <h:form id="FormPoll">
+                    <p:poll interval="7" onstart="PF('pollMultiAccount').stop()"  widgetVar="pollMultiAccount" listener="#{loginBean.checkMultiAccount}" />
+                    <p:poll interval="5" onstart="PF('pollCheckMessage').stop()"  widgetVar="pollCheckMessage" listener="#{loginBean.checkMessages}" />
+                    <p:poll interval="851"   listener="#{loginBean.checkMessages}" />
+                    <p:poll interval="15"  listener="#{loginBean.chipBalance}" update=":FormAccordionPanel:ap:chipPanel" />
+                    <p:poll interval="13" listener="#{activeTable.initActiveTable}"  update=":FormAccordionPanel:ap:activeTablePanel" />
+                    <p:poll interval="11"  listener="#{userDAO.depositCounter}" update=":FormAccordionPanel:ap:waitingDataPanel"  />
+                    <p:poll interval="13"   listener="#{userDAO.cashoutCounter}" update=":FormAccordionPanel:ap:waitingDataPanel" />
+                    <p:poll interval="33"  listener="#{userDAO.depositCounter}" update=":FormAccordionPanel:ap:depositReq,:FormAccordionPanel:ap:waitingDataPanel" rendered="#{loginBean.publ==true }" />
+                    <p:poll interval="35"  listener="#{userDAO.cashoutCounter}" update=":FormAccordionPanel:ap:cashoutReq,:FormAccordionPanel:ap:waitingDataPanel" rendered="#{loginBean.publ==true }"/>
+                    <p:poll interval="20"  listener="#{userDAO.getlastActionPanel}" update=":FormAccordionPanel:ap:lastActionPanel" rendered="#{loginBean.publ==true }" />
+                    <!-- <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar" >
+                         <h:outputText value="PrimeFaces Rocks!" style="font-size:36px;" />
+                         <p:commandButton value="close"  onclick="PF('bar').hide();"/>
+                     </p:notificationBar>-->
+                </h:form>
+
+                <h:form id="pokerid" styleClass="pokerid">
+                    <ui:include  src="poker.xhtml" />
+                </h:form >
+                <h:form style="display:none" id="slotid" styleClass="slotid">
+                    <ui:include  src="slot.xhtml" />
+                </h:form>
+                <h:form style="display:none" id="blackjackid" styleClass="bjackid">
+                    <ui:include  src="blackjack.xhtml" />
+                </h:form>
+        </p:outputPanel>
+        <p:blockUI block="page" trigger="FormdialogInfo:dialogInfo,FormMoneyMaking:MoneyMaking,FormDeposit:deposit,FormCashier:cashier,FormAccountSettings:accountSettings,FormCashout:cashout,FormReport:report,FormIncome:income">
+            <h:graphicImage value="/images/Loading1.gif" />
+        </p:blockUI>
+    </h:body>
+</html>
+
+

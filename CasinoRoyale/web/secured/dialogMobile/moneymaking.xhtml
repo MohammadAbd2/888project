@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+
+    <h:outputStylesheet name="style.css" library="css"/>
+
+  <!--  <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>-->
+    <!--   <script src="//code.jquery.com/jquery-1.10.2.js" type=""></script>
+       <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js" type=""></script>-->
+    <h:outputScript>
+        function btnDisable(id ,btn) {
+            var widget = id;
+            var btnClass = '.'+btn;
+            $( btnClass).text( "Please Wait...");
+            $( btnClass ).css({"color": "red"});
+            PF(widget).disable();
+        }
+        function btnDisable2(id) {
+            var widget = id;
+            PF(widget).disable();
+        }
+
+    </h:outputScript>
+
+    <p:tabView dynamic="false"  effect="fade" effectDuration="slow" id="tabMoneyMaking" activeIndex="0">
+      <!--  <p:ajax event="tabChange" update="formtbl,formpo"/>-->
+        <p:tab title="Payout">
+
+            <p:panelGrid columns="2">
+
+
+                    <p:dataTable id="basicDL" var="dl" value="#{downlines.messages}" scrollable="true" scrollHeight="293"  styleClass="myTable">
+                        <p:column style="text-align: center" >
+                            <f:facet name="header">
+                                <h:outputText value="Player" />
+                            </f:facet>
+                            <h:outputText value="#{dl.username}" style="color: #{dl.rakeColor}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Rake" />
+                            </f:facet>
+                            <h:outputText value="#{dl.payout}" style="color: #{dl.rakeColor}" />
+                        </p:column>
+                        <!-- <p:remoteCommand autoRun="true"  update=":formPO:btnpo"/>-->
+                    </p:dataTable>
+
+            </p:panelGrid>
+            <p:separator ></p:separator>
+<p:panel id="payPanel">
+               <!-- <h:form id="formpo">-->
+                    <p:commandButton  id="btnpo" value="GetTotal #{userDAO.total}k"  action="#{userDAO.addPayout}" styleClass="blue" widgetVar="savepayout" update="basicDL,payPanel" onclick="btnDisable2('savepayout')" disabled="#{userDAO.disable}" >
+                    </p:commandButton>
+                    <h:outputText value="LastPayout: #{userDAO.lastRake}" style="float: right;clear: both" />
+    <p:growl id="msgPayout"  showDetail="true" globalOnly="true"/>
+</p:panel>
+
+        </p:tab>
+        <p:tab title="Invite Player" >
+
+            <p:panelGrid id="grid" columns="3" cellpadding="5" columnClasses="label, value">
+
+                <p:outputLabel for="userinput"  value="UserName" />
+                <p:inputText id="userinput" value="#{addUser.username}" label="UserName" required="false" requiredMessage="UserName is required" validatorMessage="Username must between 3-14 character!">
+                    <!-- <f:validateLength minimum="3" maximum="14"/>-->
+                    <!--  <p:ajax update="msgu" event="blur"  />-->
+                </p:inputText>
+                <p:message id="msgu" for="userinput" display="icon" globalOnly="false"/>
+                <p:outputLabel for="nameinput" value="RealName" />
+                <p:inputText id="nameinput" value="#{addUser.realname}" label="RealName"  required="false"  requiredMessage="RealName is required" placeholder="Don't Change Later!" >
+                    <!--  <p:ajax update="msgn" event="blur"/>-->
+                </p:inputText>
+                <p:message id="msgn" for="nameinput" display="icon" globalOnly="false" />
+                <p:outputLabel for="emailinput" value="Email" />
+                <p:inputText id="emailinput" value="#{addUser.email}" label="Email"  required="false"  requiredMessage="Please Enter Your Email" validatorMessage="Invalid Email Format!">
+
+                    <!--  <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />-->
+                    <!-- <p:ajax update="msgem"  event="blur"/>-->
+                </p:inputText>
+                <p:message id="msgem" for="emailinput" display="icon" globalOnly="false"/>
+
+            </p:panelGrid>
+
+            <p:panelGrid id="grid2" columns="1" cellpadding="5">
+                <p:commandButton  id="btnSend" widgetVar="saveButton" styleClass="submit" value="Create New Player" action="#{addUser.inviteUser}"
+                                  update="grid,grid2" onclick="btnDisable('saveButton','submit')" oncomplete="setTimeout(function() { $('.btnmsg').slideUp(); }, 2000)"  >
+
+                </p:commandButton>
+                <p:messages id="msgbtn"  styleClass="btnmsg" showDetail="true" globalOnly="false" showSummary="false" />
+
+            </p:panelGrid>
+
+        </p:tab>
+
+    </p:tabView>
+</f:view>
+</html>

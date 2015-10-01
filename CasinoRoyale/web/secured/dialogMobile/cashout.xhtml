@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+
+    <p:panel id="panelCashout">
+        <p:panelGrid columns="1"  id="calendarPanel"  styleClass="searcharea" >
+            <p:columnGroup>
+                <p:outputLabel for="startdatetime" value="StartDate:" style="font-size: small"/>
+                <p:spacer width="5px"/>
+                <p:calendar id="startdatetime" value="#{requestList.startCalaedar}" showOn="button" readonlyInput="true" maxdate="#{pokerReport.today}" pattern="yyyy-MM-dd HH:mm:ss"  styleClass="searchinpt">
+
+                </p:calendar>
+                <p:spacer width="10px"/>
+                <p:outputLabel for="enddatetime" value="EndDate:" style="font-size: small" />
+                <p:spacer width="5px"/>
+                <p:calendar id="enddatetime" value="#{requestList.endCalendar}"  showOn="button" readonlyInput="true" maxdate="#{pokerReport.today}" pattern="yyyy-MM-dd HH:mm:ss" styleClass="searchinpt" >
+
+                </p:calendar>
+                <p:spacer width="15px"/>
+                <p:commandButton  id="cashoutSubmitDate" value="Submit" action="#{requestList.initCashls}"  update="first:FormCashout:cashoutList" oncomplete="PF('tblCashout').clearFilters()" icon="ui-icon-check" />
+            </p:columnGroup>
+        </p:panelGrid>
+        <p:panelGrid id="gridcashoutList" columns="8" styleClass="cashoutarea" >
+
+            <p:dataTable id="cashoutList" var="dl" editable="true" value="#{requestList.cashls}" widgetVar="tblCashout"  emptyMessage="There is no waiting cashout request."  style="font-size:small"  paginatorPosition="bottom" styleClass="myTable"
+                         paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                <f:facet name="header"  >
+                    <p:outputPanel >
+                        <div align="left">
+                            <p:inputText id="globalFilter" onkeyup="PF('tblCashout').filter()" styleClass="searchinpt" placeholder="Search" />
+                        </div >
+                    </p:outputPanel>
+                </f:facet>
+                <p:column style="text-align: center;width: 14%" headerText="Manager" filterBy="#{dl.manager}" filterStyle="display: none" sortBy="#{dl.manager}" >
+                    <h:outputText value="#{dl.manager}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Username" filterBy="#{dl.username}" filterStyle="display: none" sortBy="#{dl.username}" >
+                    <h:outputText value="#{dl.username}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 30%" headerText="Card Number" filterBy="#{dl.cardNumber}" filterStyle="display: none" sortBy="#{dl.cardNumber}" >
+                    <h:outputText value="#{dl.cardNumber}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Realname" filterBy="#{dl.realName}" filterStyle="display: none" sortBy="#{dl.realName}" >
+                    <h:outputText value="#{dl.realName}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 14%" headerText="Amount(K)" filterBy="#{dl.amount}" filterStyle="display: none" sortBy="#{dl.amount}" >
+                    <h:outputText value="#{dl.amount}" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 30%" headerText="Date" filterBy="#{dl.dateRQ}" filterStyle="display: none" sortBy="#{dl.dateRQ}" >
+                    <h:outputText value="#{dl.dateRQ}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 30%" headerText="Date Of Submit" filterBy="#{dl.dateDone}" filterStyle="display: none" sortBy="#{dl.dateDone}" >
+                    <h:outputText value="#{dl.dateDone}" style="color: darkgrey" />
+                </p:column>
+
+                <p:column style="text-align: center;width: 25%" headerText="Status" filterBy="#{dl.status}" filterStyle="display:none" sortBy="#{dl.status}" >
+                    <h:outputText value="#{dl.status}" style="color: #{dl.statusColor}" />
+                    <p:spacer width="5px"/>
+                    <p:commandButton rendered="#{dl.cashoutCancel==true and loginBean.admin==true}" icon="fa fa-check"  style="background: rgba(0,255,0,.4);" actionListener="#{userDAO.doneCashout(dl)}" action="#{requestList.updateDoneCashout}" update="first:FormCashout:cashoutList,first:FormCashout:calendarPanel" oncomplete="PF('tblCashout').clearFilters()"/>
+                    <p:spacer width="5px"/>
+                    <p:commandButton rendered="#{dl.cashoutCancel==true and loginBean.admin==true}" icon="fa fa-close"  style="background: rgba(255,0,0,.4); margin-left: 25px" actionListener="#{userDAO.cancelCashoutAdmin(dl)}" action="#{requestList.updateDoneCashout}" update="first:FormCashout:cashoutList,,first:FormCashout:calendarPanel" oncomplete="PF('tblCashout').clearFilters()"/>
+                    <p:spacer width="5px"/>
+                    <p:commandButton rendered="#{(dl.undoCancelCashout==true or dl.undoDoneCashout==true) and loginBean.admin==true}" icon="fa fa-refresh"  style="background: rgba(0,0,255,.2); margin-left: -5px" actionListener="#{userDAO.undoCancelCashout(dl)}" action="#{requestList.updateDoneCashout}" update="first:FormCashout:cashoutList,first:FormCashout:calendarPanel" oncomplete="PF('tblCashout').clearFilters()"/>
+
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+    </p:panel>
+
+</f:view>
+</html>

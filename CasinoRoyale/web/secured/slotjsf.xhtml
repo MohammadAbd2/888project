@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+      xmlns:j="http://java.sun.com/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<f:view>
+<h:head>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+    <script src="/resources/libraries/js/jquery-2.1.1.min.js" type=""></script>
+    <script src="/resources/libraries/js/jquery-ui.min.js" type=""></script>
+    <script src="/resources/libraries/js/jquery.formatCurrency-1.4.0.pack.js" type=""></script>
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="/resources/libraries/css/magic-bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/resources/slot/css/style.v3.css" type="text/css" />
+    <script type="text/javascript" src="/resources/libraries/js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="/resources/libraries/js/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="/resources/slot/js/script.v5.js"></script>
+   <h:outputScript >
+        $(document).ready(function() {
+
+                $('#lineslider').slider({
+                    min: 1,
+                    max: 17,
+                    value: 3,
+                    slide: function( event, ui ) {
+                        changeLine(ui.value)
+                    }
+                });
+                $('#betslider').slider({
+                    min: 1000,
+                    max: 20000,
+                    step: 1000,
+                    value: 0,
+                    slide: function( event, ui ) {
+                        changeBet(ui.value)
+                    }
+                });
+                disableSliderTrack($('#lineslider'));
+                disableSliderTrack($('#betslider'));
+                $('#soundbtn').click(function() {
+                    if ($(this).text() == 'Unmute') {
+                        $(this).html('Mute');
+                        $("sound").jPlayer("unmute");
+                    } else if ($(this).text() == 'Mute') {
+                        $(this).html('Unmute');
+                        $("sound").jPlayer("mute");
+                    }
+                });
+                $("sound#spinmp3").jPlayer( {
+                    swfPath: "../mp3",
+                    volume: 0,
+                    preload:"auto",
+                    loop: true,
+                    ready: function () {
+                        $(this).jPlayer("setMedia", {
+                            mp3: "mp3/spin.m4a"
+                        }).jPlayer("play");
+                    }
+                });
+
+            loadSound('warning');
+       loadSound('won');
+       loadSound('stop1');
+       loadSound('stop2');
+       loadSound('stop3');
+            loadSound('lose');
+
+       changeBet(0);
+       changeLine(3);
+
+       // spinWheels(7,14,1,"Saman Googoli ","0","200000",200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+       });
+        function lableDisable(){
+            $('#banklabel').html(' ');
+        }
+       function btnDisable(){
+           $(".firstBankShow").css("display", "none");
+         //  $(".bankShow").css("display", "block");
+       startSlot();
+       }
+       function start(){
+
+       var checkBank = $('input[id$="FormUpdateValue:checkBank"]').val();
+       var w1 =$('input[id$="FormUpdateValue:wheel1"]').val();
+           var w2 =$('input[id$="FormUpdateValue:wheel2"]').val();
+           var w3 =$('input[id$="FormUpdateValue:wheel3"]').val();
+           var strResult =$('input[id$="FormUpdateValue:strResult"]').val();
+           var intNewBank =$('input[id$="FormUpdateValue:intNewBank"]').val();
+           var intEndBank =$('input[id$="FormUpdateValue:intEndBank"]').val();
+           var intWinX1 =$('input[id$="FormUpdateValue:intWinX1"]').val();
+           var intWinX2 =$('input[id$="FormUpdateValue:intWinX2"]').val();
+           var intWinX3 =$('input[id$="FormUpdateValue:intWinX3"]').val();
+           var intWinX4 =$('input[id$="FormUpdateValue:intWinX4"]').val();
+           var intWinX5 =$('input[id$="FormUpdateValue:intWinX5"]').val();
+           var intWinX6 =$('input[id$="FormUpdateValue:intWinX6"]').val();
+           var intWinX7 =$('input[id$="FormUpdateValue:intWinX7"]').val();
+           var intWinX8 =$('input[id$="FormUpdateValue:intWinX8"]').val();
+           var intWinX9 =$('input[id$="FormUpdateValue:intWinX9"]').val();
+           var intWinX10 =$('input[id$="FormUpdateValue:intWinX10"]').val();
+           var intWinX11 =$('input[id$="FormUpdateValue:intWinX11"]').val();
+           var intWinX12 =$('input[id$="FormUpdateValue:intWinX12"]').val();
+           var intWinX13 =$('input[id$="FormUpdateValue:intWinX13"]').val();
+           var intWinX14 =$('input[id$="FormUpdateValue:intWinX14"]').val();
+           var intWinX15 =$('input[id$="FormUpdateValue:intWinX15"]').val();
+           var intWinX16 =$('input[id$="FormUpdateValue:intWinX16"]').val();
+           var intWinX17 =$('input[id$="FormUpdateValue:intWinX17"]').val();
+    //  alert(w1)
+       if(checkBank == 'true') {
+       spinWheels(w1,w2,w3,strResult,intNewBank,intEndBank,intWinX1,intWinX2,intWinX3,intWinX4,intWinX5,intWinX6,intWinX7,intWinX8,intWinX9,intWinX10,intWinX11,intWinX12,intWinX13,intWinX14,intWinX15,intWinX16,intWinX17)
+       }
+           Currency()
+       }
+   </h:outputScript>
+</h:head>
+    <h:form id="FormSlotCashier" style="position: absolute;width: 100%">
+
+    <p:dialog header="SlotMachine Cashier" dynamic="true" id="slotCashier"  widgetVar="dlgslotcashier"  styleClass="dialog" resizable="false" width="100%" height="50%" closeOnEscape="true" showEffect="blind" hideEffect="blind" closable="true" style="max-width: 400px;" >
+        <p:panelGrid columns="2" id="grid" cellpadding="5" columnClasses="">
+            <p:outputLabel value="Chips in Bank:" style="display: block; text-align: left; line-height: 41px;" />
+            <h:outputText id="chipBank" value=" #{loginBean.chipBank}K" style="color: gold" />
+            <p:outputLabel value="Chips on SlotMachine:" style="display: block; text-align: left; line-height: 41px;" />
+            <h:outputText id="chipSlots" value=" #{loginBean.slotBank}K"  style="color: gold" />
+            <p:outputLabel value="Amount (K):" style="display: block; text-align: left; line-height: 41px;" />
+            <p:inputText mask="9?9999" maxlength="5" id="amountCashier" value="#{slotMachine.amount}" />
+            <p:outputLabel for="modeTransfer" value="Transfer Mode:" style="display: block; text-align: left; line-height: 41px;" />
+            <p:panel>
+                <p:radioButton id="opt1" for="modeTransfer" itemIndex="0" style="line-height: 15px;margin-right: 5px;position: relative;top: 5px" />
+                <h:outputLabel for="opt1" value=" Deposit To Slot Machine" style="line-height: 15px; font-size: 11px" /><br />
+                <p:radioButton id="opt2" for="modeTransfer" itemIndex="1" style="line-height: 15px;margin-right: 5px;position: relative;top: 5px" />
+                <h:outputLabel for="opt2" value=" Cashout From Slot Machine" style="line-height: 15px; font-size: 11px" />
+            </p:panel>
+
+        </p:panelGrid>
+        <p:selectOneRadio id="modeTransfer" value="#{slotMachine.modeCashier}" layout="custom" >
+            <f:selectItem itemLabel=" From Bank To Slot Machine" itemValue="bankToSlot" />
+            <f:selectItem itemLabel=" From Slot Machine To Bank" itemValue="slotToBank" />
+        </p:selectOneRadio>
+        <p:panel>
+            <p:commandButton id="btnCashierSlot" widgetVar="btnSlotCashier" action="#{slotMachine.cashierSlotMachine}" onclick="lableDisable()" value="Transfer" update="message1,chipBank,chipSlots,FormSlot:firstBank"/>
+            <p:messages id="message1" showDetail="true" globalOnly="true"  />
+        </p:panel>
+    </p:dialog>
+</h:form>
+<h:form id="FormUpdateValue">
+    <h:inputHidden id="wheel1" value="#{slotMachine.wheel1}"/>
+    <h:inputHidden id="wheel2" value="#{slotMachine.wheel2}"/>
+    <h:inputHidden id="wheel3" value="#{slotMachine.wheel3}"/>
+    <h:inputHidden id="intNewBank" value="#{slotMachine.intNewBank}"/>
+    <h:inputHidden id="intEndBank" value="#{slotMachine.intEndBank}"/>
+    <h:inputHidden id="strResult" value="#{slotMachine.strResult}"/>
+    <h:inputHidden id="intWinX1" value="#{slotMachine.intWinX1}"/>
+    <h:inputHidden id="intWinX2" value="#{slotMachine.intWinX2}"/>
+    <h:inputHidden id="intWinX3" value="#{slotMachine.intWinX3}"/>
+    <h:inputHidden id="intWinX4" value="#{slotMachine.intWinX4}"/>
+    <h:inputHidden id="intWinX5" value="#{slotMachine.intWinX5}"/>
+    <h:inputHidden id="intWinX6" value="#{slotMachine.intWinX6}"/>
+    <h:inputHidden id="intWinX7" value="#{slotMachine.intWinX7}"/>
+    <h:inputHidden id="intWinX8" value="#{slotMachine.intWinX8}"/>
+    <h:inputHidden id="intWinX9" value="#{slotMachine.intWinX9}"/>
+    <h:inputHidden id="intWinX10" value="#{slotMachine.intWinX10}"/>
+    <h:inputHidden id="intWinX11" value="#{slotMachine.intWinX11}"/>
+    <h:inputHidden id="intWinX12" value="#{slotMachine.intWinX12}"/>
+    <h:inputHidden id="intWinX13" value="#{slotMachine.intWinX13}"/>
+    <h:inputHidden id="intWinX14" value="#{slotMachine.intWinX14}"/>
+    <h:inputHidden id="intWinX15" value="#{slotMachine.intWinX15}"/>
+    <h:inputHidden id="intWinX16" value="#{slotMachine.intWinX16}"/>
+    <h:inputHidden id="intWinX17" value="#{slotMachine.intWinX17}"/>
+    <h:inputHidden id="checkBank" value="#{slotMachine.checkBank}"/>
+</h:form>
+    <h:body>
+        <f:facet name="last">
+            <h:outputStylesheet name="style.css" library="css" />
+        </f:facet>
+
+
+    <div class="main">
+
+        <div class="header"><span class="title bold" style="color: rgb(196, 196, 196);"><b>Slot Machine - #{loginBean.userN} logged in</b></span><span class="pull-right" style="margin-right: 10px;"><button class="btn btn-default btn-xs" id="soundbtn" style="position: relative; top: -1px">Mute</button></span></div>
+
+        <h:form id="FormSlot" >
+
+        <div class="col-xs-6" style="transform: scale(.95); -webkit-transform: scale(.95);">
+            <div class="wheels">
+                <div class="back" style="border-radius: 10px 0 0 10px;">
+                    <img src="/resources/slot/images/ani.gif" alt="" style="border-radius: 10px 0 0 10px;"/>
+                    <ul>
+                        <j:set var="arrWheel1" value="${fn:split('1,2,3,4,5,6,7,8,1,2,3,4,5,6,1,2,3,4,2,3,1,2', ',')}"  />
+                        <j:set var="arrWheel2" value="${fn:split('3,1,2,1,4,3,2,1,6,5,4,3,2,1,8,7,6,5,4,3,2,1', ',')}"  />
+                        <j:set var="arrWheel3" value="${fn:split('1,8,7,3,2,6,5,4,3,2,3,1,2,2,1,4,3,2,1,6,5,4', ',')}"  />
+<j:forEach var="iw1" begin="0" end="${fn:length(arrWheel1)-1}">
+                        <li class="obj${arrWheel1[iw1]}"></li>
+</j:forEach>
+                    </ul>
+                </div>
+                <div class="back">
+                    <img alt="" src="/resources/slot/images/ani.gif"/>
+                    <ul>
+                        <j:forEach var="iw2" begin="0" end="${fn:length(arrWheel2)-1}">
+                            <li class="obj${arrWheel2[iw2]}"></li>
+                        </j:forEach>
+
+                    </ul>
+                </div>
+                <div class="back" style="border-radius: 0 10px 10px 0;">
+                    <img src="/resources/slot/images/ani.gif" alt="" style="border-radius: 0 10px 10px 0;"/>
+                    <ul>
+
+                        <j:forEach var="iw3" begin="0" end="${fn:length(arrWheel3)-1}">
+                            <li class="obj${arrWheel3[iw3]}"></li>
+                        </j:forEach>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="lines">
+
+                <svg  viewBox="0 0 310 270" preserveAspectRatio="xMinYMin meet"  version="1.1">
+                    <defs>
+                        <path id="arrowmotion" d="M0,10 L 0,0 L 0,10" />
+                        <path id="evemotion" d="M0,0 L 5,0" />
+                    </defs>
+                    <g class="lines">
+                        <polyline id="1" points="0,135 310,135" style="stroke: #ff0000;" />
+                        <polyline id="2" points="0,45 310,45" style="stroke: #ff1e00;" />
+                        <polyline id="3" points="0,225 310,225" style="stroke: #ff3c00;" />
+                        <polyline id="4" points="0,225 45,225 245,45 310,45" style="stroke: #ff5a00; transform: translateY(-7px); -webkit-transform: translateY(-7px);" />
+                        <polyline id="5" points="0,45 45,45 245,225 310,225" style="stroke: #ff7800; transform: translateY(-7px); -webkit-transform: translateY(-7px);" />
+                        <polyline id="6" points="0,135 45,135 155,45 245,135 310,135" style="stroke: #ff9600; transform: translateY(-7px); -webkit-transform: translateY(-7px);" />
+                        <polyline id="7" points="0,135 45,135 155,225 245,135 310,135" style="stroke: #ffb400; transform: translateY(7px); -webkit-transform: translateY(7px);" />
+                        <polyline id="8" points="0,45 45,45 155,135 245,45 310,45" style="stroke: #ffd200; transform: translateY(7px); -webkit-transform: translateY(7px);" />
+                        <polyline id="9" points="0,225 45,225 155,135 245,225 310,225" style="stroke: #fff000; transform: translateY(7px); -webkit-transform: translateY(7px);" />
+                        <polyline id="10" points="0,135 155,135 245,45 310,45" style="stroke: #f0ff00; transform: translateY(-14px); -webkit-transform: translateY(-14px);" />
+                        <polyline id="11" points="0,135 155,135 245,225 310,225" style="stroke: #d2ff00; transform: translateY(14px); -webkit-transform: translateY(14px);" />
+                        <polyline id="12" points="0,135 45,135 155,225 310,225" style="stroke: #b4ff00; transform: translateY(21px); -webkit-transform: translateY(21px);" />
+                        <polyline id="13" points="0,135 45,135 155,45 310,45" style="stroke: #96ff00; transform: translateY(-21px); -webkit-transform: translateY(-21px);" />
+                        <polyline id="14" points="0,45 45,45 155,135 310,135" style="stroke: #78ff00; transform: translateY(-14px); -webkit-transform: translateY(-14px);" />
+                        <polyline id="15" points="0,225 45,225 155,135 310,135" style="stroke: #5aff00; transform: translateY(21px); -webkit-transform: translateY(21px);" />
+                        <polyline id="16" points="0,45 155,45 245,135 310,135" style="stroke: #3cff00; transform: translateY(-21px); -webkit-transform: translateY(-21px);" />
+                        <polyline id="17" points="0,225 155,225 245,135 310,135" style="stroke: #1eff00; transform: translateY(14px); -webkit-transform: translateY(14px);" />
+                    </g>
+                </svg>
+            </div>
+
+            <ul  class="list-group controlbox" style="margin-top: 278px; margin-right: 10px; opacity: .7;">
+                <li class="list-group-item" style="padding: 0px;"><p:commandButton widgetVar="slotStartSpin" onclick="btnDisable()" update="FormUpdateValue"  action="#{slotMachine.startSlot}"  value="Start Spin"  styleClass="btn btn-danger btn-sm btn-spin" id="spin" style="width: 100%;" >
+                    <!--  <f:ajax render="FormUpdateValue"/>-->
+                </p:commandButton><button type="button" disabled="disabled" class="btn btn-danger btn-sm btn-spin-fake " style="display: none;width: 100%;line-height: 26px;">Start Spin</button></li>
+                <li class="list-group-item" style="padding: 7px;" id="slotresult">Welcome to Casino Royale Slot Machine.</li>
+                <li  class="list-group-item" style="padding: 7px;">Bank:
+                    <h:outputText id="firstBank" styleClass="impt currency firstBankShow" style="color: gold;" value="#{slotMachine.intBank}"/>
+                    <span id="banklabel" class="impt currency"  style="color: gold;"></span>
+                    <p:commandButton  value="Cashier" widgetVar="slotCashier" actionListener="#{loginBean.chipBalance}" update="FormSlotCashier:chipBank,FormSlotCashier:chipSlots" oncomplete="PF('dlgslotcashier').show()"  styleClass="btn btn-primary btn-xs pull-right btn-cashier" id="cashier2" style="margin-left: 10px; position: relative;top: -4px;"></p:commandButton>
+                </li>
+
+                <li class="list-group-item" style="padding: 7px;">Line:&nbsp;
+                    <input type="text" id="lineslabel" name="lineslabel" class="impt" readonly="readonly" style="border:0; background:transparent; width: 60px;"/>
+                    <div id="lineslider" class="sliders" style="width: 50%; float: right; margin-top: 8px; margin-right: 10px;"></div>
+                </li>
+                <li class="list-group-item" style="padding: 7px;">Bet:&nbsp;&nbsp;
+                    <input type="text" id="betslabel" name="betslabel" class="impt currency" readonly="readonly" style="border:0; background:transparent; width: 60px;"/>
+                    <div id="betslider" class="sliders" style="width: 50%; float: right; margin-top: 8px; margin-right: 10px;"></div>
+                </li>
+                <li class="list-group-item" style="padding: 7px;">Total Bet:<span id="totalbet" class="impt currency pull-right" style="color: gold;">0</span></li>
+
+
+
+            </ul>
+
+        </div>
+
+        <div class="col-xs-6" style="transform: scale(.97); -webkit-transform: scale(.97);">
+            <div class="awards">
+                <ul class="list-group" style="opacity: .9;">
+                    <j:set var="arrAwards" value="${fn:split('8,7,6,5,4,4,3,3,2,2,1,1,1', ',')}"  />
+                    <j:set var="arrAwardsCount" value="${fn:split('3,3,3,3,3,2,3,2,3,2,3,2,1', ',')}"  />
+                    <j:set var="arrAwardsAmount" value="${fn:split('200,100,50,30,15,10,8,7,6,5,3,2,1', ',')}"  />
+
+                    <j:forEach var="i" begin="0" end="${fn:length(arrAwardsAmount)-1}" >
+                        <li class="list-group-item" data-wins="${arrAwardsAmount[i]}" style="padding: 3px; overflow: hidden;">
+                            <j:forEach var="ic" begin="1" end="3" >
+                                <j:choose>
+                                    <j:when test="${arrAwardsCount[i] >= ic}">
+                        <span class="obj${arrAwards[i]}"></span>
+                                    </j:when>
+                                    <j:otherwise>
+                         <span style="color: #ACACAC;">Any</span>
+                                    </j:otherwise>
+                                </j:choose>
+                            </j:forEach>
+                    <span>Bet &#160;x&#160; ${arrAwardsAmount[i]} &#160;&#160;=&#160;&#160;</span>
+                    <span class="impt currency" style="color: gold;">0</span>
+                    </li>
+                    </j:forEach>
+                </ul>
+
+            </div>
+
+        </div>
+        </h:form>
+    </div>
+        <sound id="spinmp3"></sound>
+    <sound id="wonmp3" ></sound>
+    <sound id="stop1mp3"></sound>
+    <sound id="stop2mp3"></sound>
+    <sound id="stop3mp3"></sound>
+        <sound id="losemp3"></sound>
+        <sound id="warningmp3"></sound>
+    <div id="updatetarget" style="display: none;"></div>
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="z-index: 900;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    <h4 class="modal-title">SlotMachine Cashier</h4>
+
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    </h:body>
+
+</f:view>
+</html>
