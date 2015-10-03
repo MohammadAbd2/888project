@@ -31,16 +31,16 @@
     </context-param>
     <context-param>
         <param-name>handhistory</param-name>
-        <param-value>C:/Users/Salar/Documents/Information/HandHistory/</param-value>
+        <param-value>C:/Users/Saman/Documents/Information/HandHistory/</param-value>
     </context-param>
     <context-param>
         <param-name>eventLogs</param-name>
-        <param-value>C:/Users/Salar/Documents/Information/Logs/</param-value>
+        <param-value>C:/Users/Saman/Documents/Information/Logs/</param-value>
     </context-param>
 
     <context-param>
         <param-name>avatar</param-name>
-        <param-value>C:/Users/Salar/Documents/888Poker/images/avatars/</param-value>
+        <param-value>C:/Users/Saman/Documents/888Poker/images/avatars/</param-value>
     </context-param>
     <context-param>
         <param-name>payout</param-name>
@@ -100,7 +100,7 @@
     </context-param>
     <context-param>
         <param-name>DB-PASSWORD</param-name>
-        <param-value>42101365aS</param-value>
+        <param-value>123</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>

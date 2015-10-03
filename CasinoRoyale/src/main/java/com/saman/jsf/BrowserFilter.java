@@ -19,7 +19,7 @@ public class BrowserFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String browser = "on";
+        String browser = "off";
 
             try {
                 if (browser.equals("on")) {
