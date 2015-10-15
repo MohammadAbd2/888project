@@ -14,7 +14,7 @@ public class ParseEmail {
 
     public  static void main(String args[]) throws IOException, InterruptedException {
 String subject ="5 Tourney - FreeRoll Everyday";
-        File dir = new File("D:/EmailList/test.csv");
+        File dir = new File("D:/EmailList/NewMail888.txt");
        /* String Msg = "<h2 style=" + "\"" + "color: #fff; font-family: verdana; font-size: 18px; font-weight: normal;" + "\"" + ">be 888Casino khosh amadid.<br/>888 ham aknoon be rooye application dar dastresh shomast</h2><br/>" +
                 "<h3 style=" + "\"" + "color: #fff; font-family: verdana; font-size: 14px; font-weight: normal;" + "\"" + ">Link haye download baraye windows va mac va address http://888pkr.club baraye mobile ha faal mibashad.</h3><br/>" +
                 "<h3 style=" + "\"" + "color: #fff; font-family: verdana; font-size: 13px; font-weight: normal; background: rgba(255,255,255,.1); padding: 15px 20px; margin-top:0;" + "\"" + ">ma talash kardim ke dar in version amniat,soraat ,support 24 saate ra dar be rooz tarin technology java estefade konim ta dar miyane digar site ha be komake shoma doostan bi hamta bashim.ham aknoon bazi haye poker va slotMachine be rooye site hastand va be zoodi BlackJack va... niz ezafe mishavad.</h3>";
@@ -51,13 +51,11 @@ String subject ="5 Tourney - FreeRoll Everyday";
             for(String result : email){
                 counter++;
 
-             //   MailServer mail = new MailServer();
-                Sendmail mail = new Sendmail();
-                try {
+               MailServer mail = new MailServer();
+            //    Sendmail mail = new Sendmail();
+
                     mail.sendEmail(result, subject, Msg);
-                } catch (EmailException e) {
-                    e.printStackTrace();
-                }
+
                 if (mail.isMailResult()) {
 
                     System.out.println("Mail sent to "+ result);
