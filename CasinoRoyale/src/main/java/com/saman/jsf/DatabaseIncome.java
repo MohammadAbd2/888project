@@ -26,7 +26,7 @@ import java.sql.SQLException;
 
     private void init()throws Exception{
 
-        db_server   = "jdbc:Mysql://localhost:3377/888poker";
+        db_server   = "jdbc:MySql://localhost:3377/888poker";
         db_user     = "root";
         db_password = "42101365@dmin";
         db_driver   = "com.mysql.jdbc.Driver";

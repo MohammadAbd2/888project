@@ -27,20 +27,20 @@
 
     <context-param>
         <param-name>ipPort</param-name>
-        <param-value>http://localhost:4212</param-value>
+        <param-value>http://localhost:4210</param-value>
     </context-param>
     <context-param>
         <param-name>handhistory</param-name>
-        <param-value>C:/Users/Saman/Documents/Information/HandHistory/</param-value>
+        <param-value>C:/Users/Salar/Documents/Information/HandHistory/</param-value>
     </context-param>
     <context-param>
         <param-name>eventLogs</param-name>
-        <param-value>C:/Users/Saman/Documents/Information/Logs/</param-value>
+        <param-value>C:/Users/Salar/Documents/Information/Logs/</param-value>
     </context-param>
 
     <context-param>
         <param-name>avatar</param-name>
-        <param-value>C:/Users/Saman/Documents/CasinoRoyale/images/avatars/</param-value>
+        <param-value>C:/Users/Salar/Documents/888Poker/images/avatars/</param-value>
     </context-param>
     <context-param>
         <param-name>payout</param-name>
@@ -64,7 +64,7 @@
     </context-param>
     <context-param>
         <param-name>mavenPassword</param-name>
-        <param-value>/myapi?Password=42101365MY@dmin</param-value>
+        <param-value>/myapi?Password=888Casino_Saman_?!</param-value>
     </context-param>
    <context-param>
         <param-name>gmailUser</param-name>
@@ -100,7 +100,7 @@
     </context-param>
     <context-param>
         <param-name>DB-PASSWORD</param-name>
-        <param-value>42101365</param-value>
+        <param-value>42101365aS</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>

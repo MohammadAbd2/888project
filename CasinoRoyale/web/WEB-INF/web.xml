@@ -6,7 +6,7 @@
     <!-- Change to "Production" when you are ready to deploy -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
     <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
@@ -27,20 +27,20 @@
 
     <context-param>
         <param-name>ipPort</param-name>
-        <param-value>http://localhost:4210</param-value>
+        <param-value>http://188.138.57.28:4210</param-value>
     </context-param>
     <context-param>
         <param-name>handhistory</param-name>
-        <param-value>C:/Users/Salar/Documents/Information/HandHistory/</param-value>
+        <param-value>C:/Users/Administrator/Documents/Information/HandHistory/</param-value>
     </context-param>
     <context-param>
         <param-name>eventLogs</param-name>
-        <param-value>C:/Users/Salar/Documents/Information/Logs/</param-value>
+        <param-value>C:/Users/Administrator/Documents/Information/Logs/</param-value>
     </context-param>
 
     <context-param>
         <param-name>avatar</param-name>
-        <param-value>C:/Users/Salar/Documents/888Poker/images/avatars/</param-value>
+        <param-value>C:/Users/Administrator/Documents/888Poker/images/avatars/</param-value>
     </context-param>
     <context-param>
         <param-name>payout</param-name>
@@ -75,8 +75,8 @@
         <param-value>42101365aS</param-value>
     </context-param>
     <context-param>
-        <param-name>mailServer</param-name>c
-        <param-value>gmail</param-value>
+        <param-name>mailServer</param-name>
+        <param-value>Server</param-value>
     </context-param>
      <context-param>
         <param-name>mailHost</param-name>
@@ -100,7 +100,7 @@
     </context-param>
     <context-param>
         <param-name>DB-PASSWORD</param-name>
-        <param-value>42101365aS</param-value>
+        <param-value>42101365@dmin</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.THEME</param-name>
@@ -114,16 +114,16 @@
     <context-param>
         <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
         <!--<param-value>6LcoWQoTAAAAAAc4ySDn1mEux7vXWfJdebBtcvJ8</param-value>--> <!--usa-->
-           <param-value>6Lf1zgMTAAAAABxSBXHGlIYgoualMC1KtuWXcdb0</param-value>
+          <!-- <param-value>6Lf1zgMTAAAAABxSBXHGlIYgoualMC1KtuWXcdb0</param-value>-->
         <!-- <param-value>6LebPgYTAAAAAK5YSF6_O_bzlxNUiO6q3njeuoz4</param-value>--> <!--germany -->
-       <!-- <param-value>6LdMjAsTAAAAAESAZoeUDQxaaeURlidX9Dhn9kKD</param-value> --><!--germany2 -->
+        <param-value>6LdMjAsTAAAAAESAZoeUDQxaaeURlidX9Dhn9kKD</param-value> <!--germany2 -->
     </context-param>
     <context-param>
         <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
         <!--<param-value>6LcoWQoTAAAAAHPX96bLelxHYi4_ciDu-6FjFa3T</param-value>--> <!--usa-->
-          <param-value>6Lf1zgMTAAAAAG2jiSXlTpZy_yTu0SfuMS4J3T9n</param-value>
+         <!-- <param-value>6Lf1zgMTAAAAAG2jiSXlTpZy_yTu0SfuMS4J3T9n</param-value>-->
          <!-- <param-value>6LebPgYTAAAAAOiXLw6KeP4x4vAwIDqiqsyupGRa</param-value>--> <!--germany -->
-        <!-- <param-value>6LdMjAsTAAAAAPSjBKZepkWNco0gne6GavaJqoNl</param-value>--> <!--germany2 -->
+         <param-value>6LdMjAsTAAAAAPSjBKZepkWNco0gne6GavaJqoNl</param-value> <!--germany2 -->
     </context-param>
     <!-- Filtering -->
     <filter>
@@ -193,15 +193,15 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
-<!--    <listener>
+    <listener>
         <listener-class>
             com.saman.jsf.com.saman.jsf.report.GenerateIncome
         </listener-class>
-    </listener>-->
+    </listener>
 
-   <!-- <listener>
+    <listener>
         <listener-class>
             com.saman.jsf.com.saman.jsf.activetable.GenerateActiveTable
         </listener-class>
-    </listener>-->
+    </listener>
 </web-app>
